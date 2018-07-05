@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "80949661153",
+    "firebase_url": "https://bc-wallet-a7bb3.firebaseio.com",
+    "project_id": "bc-wallet-a7bb3",
+    "storage_bucket": "bc-wallet-a7bb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80949661153:android:5ba04ea74adc90fc",
+        "android_client_info": {
+          "package_name": "com.framgia.bitcoinwallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80949661153-80vrp9prh4k33mc91ru26sup63ptg7ik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.framgia.bitcoinwallet",
+            "certificate_hash": "1bd3b7ecfefe82649e62226812c0bb5e99e84bcd"
+          }
+        },
+        {
+          "client_id": "80949661153-g2qb5gk1jg1po59pinb98s5l2mu17199.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZlFyjei5IPaHZs9CB2323V0soTdV54VI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80949661153-g2qb5gk1jg1po59pinb98s5l2mu17199.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

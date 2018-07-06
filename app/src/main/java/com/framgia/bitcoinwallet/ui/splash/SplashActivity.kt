@@ -3,7 +3,7 @@ package com.framgia.bitcoinwallet.ui.splash
 import android.os.Handler
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.ui.BaseActivity
-import com.framgia.bitcoinwallet.util.SharedPreUtils
+import com.framgia.bitcoinwallet.ui.screen.MainActivity
 
 class SplashActivity : BaseActivity() {
 
@@ -32,14 +32,16 @@ class SplashActivity : BaseActivity() {
      * Check login state in SharedPreferences
      */
     private fun checkLoginState(): Boolean {
-        return SharedPreUtils.getLoginState(this)
+//        return SharedPreUtils.getLoginState(this)
+        // TODO hard code, I will update when we have login screen
+        return true
     }
 
     /**
      * Get Intent from MainActivity and navigate to Home Screen
      */
     private fun startMainScreen() {
-
+        startActivity(MainActivity.getMainIntent(this))
     }
 
     /**

@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">BitCoinWallet</string>
-    <string name="waiting_title">Waiting ...</string>
+    <string name="waiting_title">Waiting &#8230;</string>
+    <string name="title_personal_wallet">Personal wallet</string>
+    <string name="title_transaction">Transaction</string>
+    <string name="title_receive">Receive</string>
+    <string name="title_send">Send</string>
+    <string name="title_bitcoin_wallet">Bitcoin wallet</string>
+    <string name="title_add_wallet">Add wallet</string>
+    <string name="title_log_out">Log out</string>
+    <string name="close_drawer">Close drawer</string>
+    <string name="open_drawer">Open drawer</string>
+    <string name="title_transaction_group">Transaction</string>
+    <string name="title_wallet_group">Bitcoin Wallet</string>
+    <string name="title_qr_code">qr code</string>
 </resources>

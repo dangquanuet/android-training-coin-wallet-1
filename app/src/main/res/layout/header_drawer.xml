@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_196"
+    android:background="@drawable/bg_header_drawer">
+
+    <View
+        android:id="@+id/view_end"
+        android:layout_width="48dp"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/color_deep_purple_50_500"
+        app:layout_constraintBottom_toBottomOf="@id/image_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/image_settings" />
+
+    <ImageView
+        android:id="@+id/image_settings"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/view_end"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/image_account"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:src="@drawable/ic_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/image_settings"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/view_start"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_2"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:background="@color/color_deep_purple_50_500"
+        app:layout_constraintBottom_toBottomOf="@id/image_settings"
+        app:layout_constraintEnd_toStartOf="@id/image_account"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/image_settings" />
+
+    <ImageView
+        android:id="@+id/image_avatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="@dimen/dp_16"
+        android:src="@drawable/default_avatar"
+        app:layout_constraintBottom_toTopOf="@id/view_start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/text_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="sangvd1996@gmail.com"
+        app:layout_constraintBottom_toBottomOf="@id/image_avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_avatar" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:text="vu duc sang"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/text_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/text_email" />
+</android.support.constraint.ConstraintLayout>

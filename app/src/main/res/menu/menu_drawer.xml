@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/title_transaction_group">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/action_transaction"
+                    android:icon="@drawable/ic_transaction"
+                    android:title="@string/title_transaction" />
+
+                <item
+                    android:id="@+id/action_receive"
+                    android:icon="@drawable/ic_receive"
+                    android:title="@string/title_receive" />
+
+                <item
+                    android:id="@+id/action_send"
+                    android:icon="@drawable/ic_send"
+                    android:title="@string/title_send" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/title_wallet_group">
+
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/action_bitcoin_wallet"
+                    android:icon="@drawable/ic_bitcoin_wallet"
+                    android:title="@string/title_bitcoin_wallet" />
+
+                <item
+                    android:id="@+id/action_add_wallet"
+                    android:icon="@drawable/ic_add_wallet"
+                    android:title="@string/title_add_wallet" />
+            </group>
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/action_log_out"
+            android:icon="@drawable/ic_log_out"
+            android:title="@string/title_log_out" />
+    </group>
+</menu>

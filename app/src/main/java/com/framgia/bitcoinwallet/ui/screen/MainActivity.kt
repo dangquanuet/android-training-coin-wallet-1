@@ -44,11 +44,11 @@ class MainActivity : BaseActivity() {
             setStatusBarBackground(R.color.color_deep_purple_50_700)
         }
         drawerToggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            toolBar,
-            R.string.open_drawer,
-            R.string.close_drawer
+                this,
+                drawerLayout,
+                toolBar,
+                R.string.open_drawer,
+                R.string.close_drawer
         )
         navigationView = findViewById(R.id.navigation_view_main)
         drawerToggle.syncState()
@@ -74,7 +74,7 @@ class MainActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.action_pr_code ->
-                    return true
+                return true
         }
         return super.onOptionsItemSelected(item)
     }

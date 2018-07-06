@@ -55,5 +55,10 @@ dependencies {
     implementation "com.google.firebase:firebase-auth:$firebaseVersion"
     implementation "com.google.firebase:firebase-database:$firebaseVersion"
 
+    //databinding
+    kapt "com.android.databinding:compiler:$gradlePluginVersion"
+
+    //animation
+    implementation "com.github.ybq:Android-SpinKit:$animationLibVersion"
 }
 apply plugin: 'com.google.gms.google-services'

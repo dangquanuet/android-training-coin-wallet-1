@@ -51,7 +51,7 @@ class UserRemoteDatasource : UserDataSource {
                 e.onSuccess(it.isSuccessful)
             }
                     .addOnFailureListener {
-                        e.onError(it)
+
                     }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

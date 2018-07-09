@@ -5,4 +5,10 @@ package com.framgia.bitcoinwallet.data.source.repository
  * By: Sang
  * Description:
  */
-class BitCoinRepository
+class BitCoinRepository {
+    companion object {
+        private var INSTANCE: BitCoinRepository? = null
+
+        fun getInstance() = INSTANCE ?: BitCoinRepository()
+    }
+}

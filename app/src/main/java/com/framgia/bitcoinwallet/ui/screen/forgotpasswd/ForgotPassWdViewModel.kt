@@ -27,12 +27,12 @@ class ForgotPassWdViewModel(
                 true -> {
                     visibleCodeInputUi.value = true
                     userRepository.forgotPassword(email).subscribe(
-                            Consumer {
+                             {
                                 lastSendVerify?.value = Date()
                                 notifyMessage.value =
                                         context.resources.getString(R.string.success_verify_request)
                             },
-                            Consumer {
+                             {
                                 notifyMessage.value =
                                         context.resources.getString(R.string.failed_verify_request)
                             }

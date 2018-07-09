@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EditTextCustom">
+        <attr name="setImage" format="reference" />
+        <attr name="textHint" format="string" />
+        <attr name="android:inputType" />
+    </declare-styleable>
+</resources>

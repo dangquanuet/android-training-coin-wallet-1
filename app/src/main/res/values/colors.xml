@@ -7,4 +7,8 @@
     <color name="color_gray_50_300">#E0E0E0</color>
     <color name="color_deep_purple_50">#EDE7F6</color>
     <color name="color_gray_50_400">#BDBDBD</color>
+    <color name="color_green">#448AFB</color>
+    <color name="color_green_dark">#5CC8EF</color>
+    <color name="color_gray">#E9F2FE</color>
+    <color name="color_gray_dark">#C7D8ED</color>
 </resources>

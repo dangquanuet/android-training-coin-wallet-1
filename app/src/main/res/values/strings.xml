@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">BitCoinWallet</string>
-    <string name="waiting_title">Waiting &#8230;</string>
     <string name="title_personal_wallet">Personal wallet</string>
     <string name="title_transaction">Transaction</string>
     <string name="title_receive">Receive</string>
@@ -13,4 +12,20 @@
     <string name="title_transaction_group">Transaction</string>
     <string name="title_wallet_group">Bitcoin Wallet</string>
     <string name="title_qr_code">qr code</string>
+    <string name="waiting_title">Waiting ...</string>
+    <string name="back_title">Back</string>
+    <string name="forgot_title">Forgot Password</string>
+    <string name="action_login">Login</string>
+    <string name="action_send_mail">Send Now</string>
+    <string name="email_title">Email</string>
+    <string name="password_new_title">New PassWord</string>
+    <string name="password_confirm_title">Confirm PassWord</string>
+    <string name="confirm_title">Confirm</string>
+    <string name="code_verify_title">Code Verify</string>
+    <string name="retry_title">Retry</string>
+    <string name="not_received_mail_title">Do not received our mail ?</string>
+    <string name="email_invalid">Email invalid !</string>
+    <string name="retry_verify_request">Please retry after </string>
+    <string name="failed_verify_request">Error when requesting!</string>
+    <string name="success_verify_request">The code has been sent to your email</string>
 </resources>

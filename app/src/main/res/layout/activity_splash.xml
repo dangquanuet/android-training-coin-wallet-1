@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_deep_purple_50_700"
     tools:context=".ui.splash.SplashActivity">
 
     <ImageView
@@ -22,7 +23,7 @@
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_8"
-        app:SpinKit_Color="@color/color_deep_purple_50_700"
+        app:SpinKit_Color="@android:color/white"
         app:layout_constraintLeft_toLeftOf="@+id/image_coin"
         app:layout_constraintBottom_toBottomOf="parent" />
     
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content"
         android:text="@string/waiting_title"
         android:layout_marginLeft="@dimen/dp_10"
+        android:textColor="@android:color/white"
         app:layout_constraintLeft_toRightOf="@id/image_loading"
         app:layout_constraintTop_toTopOf="@+id/image_loading"
         app:layout_constraintBottom_toBottomOf="@id/image_loading"

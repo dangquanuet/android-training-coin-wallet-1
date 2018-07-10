@@ -3,7 +3,7 @@ package com.framgia.bitcoinwallet.ui.splash
 import android.os.Handler
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.ui.BaseActivity
-import com.framgia.bitcoinwallet.ui.screen.MainActivity
+import com.framgia.bitcoinwallet.ui.screen.main.MainActivity
 
 class SplashActivity : BaseActivity() {
 

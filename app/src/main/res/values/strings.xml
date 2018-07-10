@@ -33,4 +33,14 @@
     <string name="note_title">Note</string>
     <string name="send_instruct_title">If you want to send some money, Please fill up the followings:</string>
     <string name="available_balance__title">Available balance</string>
+    <string name="title_sign_in_now">Sign In Now </string>
+    <string name="title_intro_login">Embarrassing hidden in the middle of text .All the
+        lorem ipsum generator on the internet tend to
+        repeat predefined chunks </string>
+    <string name="text_hint_email">Email</string>
+    <string name="text_hint_password">Password</string>
+    <string name="title_sign_in">Sign In</string>
+    <string name="title_forgot_pass">Forgot Password ?</string>
+    <string name="title_not_member">Not a Member Yet ?</string>
+    <string name="text_register">Register</string>
 </resources>

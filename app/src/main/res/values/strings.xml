@@ -28,4 +28,9 @@
     <string name="retry_verify_request">Please retry after </string>
     <string name="failed_verify_request">Error when requesting!</string>
     <string name="success_verify_request">The code has been sent to your email</string>
+    <string name="bitcoin_address_title">Bitcoin Address</string>
+    <string name="amount_title">Amount</string>
+    <string name="note_title">Note</string>
+    <string name="send_instruct_title">If you want to send some money, Please fill up the followings:</string>
+    <string name="available_balance__title">Available balance</string>
 </resources>

@@ -4,5 +4,6 @@
         <attr name="setImage" format="reference" />
         <attr name="textHint" format="string" />
         <attr name="android:inputType" />
+        <attr name="android:text" />
     </declare-styleable>
 </resources>

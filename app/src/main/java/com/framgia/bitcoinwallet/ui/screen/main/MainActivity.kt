@@ -10,8 +10,8 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.framgia.bitcoinwallet.R
+import com.framgia.bitcoinwallet.data.model.User
 import com.framgia.bitcoinwallet.ui.BaseActivity
 import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinFragment
 import com.framgia.bitcoinwallet.util.setUpActionBar

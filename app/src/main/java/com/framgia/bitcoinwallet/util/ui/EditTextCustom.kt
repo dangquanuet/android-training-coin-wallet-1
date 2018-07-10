@@ -32,9 +32,11 @@ class EditTextCustom @JvmOverloads constructor(
         var res = typeArray.getDrawable(R.styleable.EditTextCustom_setImage)
         var resText = typeArray.getString(R.styleable.EditTextCustom_textHint)
         var inputType = typeArray.getInt(R.styleable.EditTextCustom_android_inputType, EditorInfo.TYPE_NULL)
+        var text = typeArray.getText(R.styleable.EditTextCustom_android_text)
         img?.setImageDrawable(res)
         edt?.setHint(resText)
         edt?.setRawInputType(inputType)
+        edt?.setText(text)
         typeArray.recycle()
     }
 
@@ -51,4 +53,8 @@ class EditTextCustom @JvmOverloads constructor(
     fun setImage(res: Int) {
         img?.setImageResource(res)
     }
+
+    fun getEditText() = edt
+
+    fun getImage() = img
 }

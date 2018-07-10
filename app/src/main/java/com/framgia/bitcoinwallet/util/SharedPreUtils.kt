@@ -21,4 +21,20 @@ object SharedPreUtils {
             commit()
         }
     }
+
+    fun saveUserId(context: Context, id: String) {
+        var editor: SharedPreferences.Editor =
+                context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE).edit()
+
+        with(editor) {
+            putString(Constant.PREF_USER_ID_KEY, id)
+            commit()
+        }
+    }
+
+    fun getIdUser(context: Context): String {
+        var sharedPref: SharedPreferences =
+                context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE)
+        return sharedPref?.getString(Constant.PREF_USER_ID_KEY, null)
+    }
 }

@@ -118,6 +118,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_forgot_pass" />
 
         <TextView
+            android:onClick="@{(view)-> listener.onClickSignUp(view)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_25"

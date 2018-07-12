@@ -1,5 +1,6 @@
 package com.framgia.bitcoinwallet.ui.screen.main
 
+import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.content.Intent
 import android.support.design.widget.NavigationView
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +16,7 @@ import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.data.model.User
 import com.framgia.bitcoinwallet.ui.BaseActivity
 import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinFragment
+import com.framgia.bitcoinwallet.util.obtainViewModel
 import com.framgia.bitcoinwallet.util.setUpActionBar
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -99,8 +102,8 @@ class MainActivity : BaseActivity() {
     private fun createTabFragment(): HashMap<String, Fragment> {
         return HashMap<String, Fragment>().apply {
             put(getString(R.string.title_transaction), SendCoinFragment.newInstance())
-            put(getString(R.string.title_receive), SendCoinFragment.newInstance())
-            put(getString(R.string.title_send), SendCoinFragment.newInstance())
+            put(getString(R.string.title_receive), Fragment())
+            put(getString(R.string.title_send), Fragment())
         }
     }
 

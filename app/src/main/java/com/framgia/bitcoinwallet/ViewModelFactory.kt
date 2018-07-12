@@ -9,6 +9,7 @@ import com.framgia.bitcoinwallet.data.source.repository.BitCoinRepository
 import com.framgia.bitcoinwallet.data.source.repository.UserRepository
 import com.framgia.bitcoinwallet.ui.screen.forgotpasswd.ForgotPassWdViewModel
 import com.framgia.bitcoinwallet.ui.screen.login.LoginViewModel
+import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -23,8 +24,12 @@ class ViewModelFactory private constructor(
                 when {
                     isAssignableFrom(ForgotPassWdViewModel::class.java) ->
                         ForgotPassWdViewModel(application, userRepository)
+
                     isAssignableFrom(LoginViewModel::class.java) ->
                         LoginViewModel(application, userRepository)
+
+                    isAssignableFrom(SendCoinViewModel::class.java) ->
+                        SendCoinViewModel(application, userRepository)
 
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

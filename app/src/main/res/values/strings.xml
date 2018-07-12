@@ -43,4 +43,11 @@
     <string name="title_forgot_pass">Forgot Password ?</string>
     <string name="title_not_member">Not a Member Yet ?</string>
     <string name="text_register">Register</string>
+    <string name="error_message">Error when load data !</string>
+    <string name="invalid_coin_address">Coin adress invalid!</string>
+    <string name="invalid_send_amount">Amount invalid !</string>
+    <string name="dialog_send_title">Send coint </string>
+    <string name="dialog_send_message">Are you sure you want to transfer money to this address?</string>
+    <string name="send_coin_successed">Send successed</string>
+    <string name="send_coin_failed">Send failed</string>
 </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -19,15 +18,17 @@
         <View
             android:id="@+id/view_top"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_120"
+            android:layout_height="0dp"
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_marginTop="@dimen/dp_15"
             android:alpha="0.8"
             android:background="@drawable/bg_header_drawer"
             android:elevation="@dimen/dp_25"
+            android:visibility="@{viewModel.isLoadingData() ?View.GONE :View.VISIBLE}"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/view_middle" />
 
         <View
             android:id="@+id/view_middle"
@@ -37,8 +38,9 @@
             android:layout_marginRight="@dimen/dp_25"
             android:background="@android:color/white"
             android:elevation="@dimen/dp_20"
+            android:visibility="@{viewModel.isLoadingData() ?View.GONE :View.VISIBLE}"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_top" />
+            app:layout_constraintBottom_toTopOf="@+id/view_bottom" />
 
         <View
             android:id="@+id/view_bottom"
@@ -46,10 +48,12 @@
             android:layout_height="@dimen/dp_8"
             android:layout_marginLeft="@dimen/dp_35"
             android:layout_marginRight="@dimen/dp_35"
+            android:layout_marginBottom="@dimen/dp_20"
             android:background="@android:color/white"
             android:elevation="@dimen/dp_15"
+            android:visibility="@{viewModel.isLoadingData() ?View.GONE :View.VISIBLE}"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_middle" />
+            app:layout_constraintBottom_toTopOf="@+id/view_send_container" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,6 +63,7 @@
             android:elevation="@dimen/dp_25"
             android:text="@string/available_balance__title"
             android:textStyle="italic|bold"
+            android:visibility="@{viewModel.isLoadingData() ?View.GONE :View.VISIBLE}"
             app:layout_constraintLeft_toLeftOf="@id/view_top"
             app:layout_constraintTop_toTopOf="@id/view_top" />
 
@@ -69,31 +74,15 @@
             android:layout_marginLeft="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_8"
             android:elevation="@dimen/dp_30"
+            android:text="@{viewModel.curentBalance}"
             android:textColor="@color/color_deep_purple_50_700"
             android:textSize="@dimen/sp_35"
             android:textStyle="bold"
+            android:visibility="@{viewModel.isLoadingData() ?View.GONE :View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/view_top"
             app:layout_constraintLeft_toLeftOf="@id/view_top"
             app:layout_constraintRight_toRightOf="@id/view_top"
             app:layout_constraintTop_toTopOf="@id/view_top" />
-
-        <View
-            android:layout_width="80dp"
-            android:layout_height="@dimen/dp_2"
-            android:background="@color/color_deep_purple_50_700"
-            android:elevation="@dimen/dp_25"
-            app:layout_constraintBottom_toTopOf="@id/text_balance"
-            app:layout_constraintLeft_toLeftOf="@id/text_balance"
-            app:layout_constraintRight_toRightOf="@id/text_balance" />
-
-        <View
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_2"
-            android:background="@color/color_deep_purple_50_700"
-            android:elevation="@dimen/dp_25"
-            app:layout_constraintLeft_toLeftOf="@id/text_balance"
-            app:layout_constraintRight_toRightOf="@id/text_balance"
-            app:layout_constraintTop_toBottomOf="@id/text_balance" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/view_send_container"
@@ -102,6 +91,7 @@
             android:layout_margin="@dimen/dp_8"
             android:background="@drawable/shape_bg_send_coin"
             android:paddingTop="@dimen/dp_20"
+            android:visibility="@{viewModel.isLoadingData() ?View.GONE :View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
@@ -125,12 +115,12 @@
                 android:drawablePadding="@dimen/dp_8"
                 android:hint="@string/bitcoin_address_title"
                 android:inputType="text"
+                android:maxLines="1"
                 android:paddingBottom="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_8"
                 android:paddingRight="@dimen/dp_45"
                 android:paddingTop="@dimen/dp_10"
-                android:maxLines="1"
-                app:layout_constraintBottom_toTopOf="@+id/edit_amount" />
+                app:layout_constraintBottom_toTopOf="@+id/text_coin_add_invalid" />
 
             <ImageView
                 android:id="@+id/image_scan"
@@ -144,6 +134,19 @@
                 app:layout_constraintRight_toRightOf="@id/edit_bitcoin_add"
                 app:layout_constraintTop_toTopOf="@id/edit_bitcoin_add" />
 
+            <TextView
+                android:id="@+id/text_coin_add_invalid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="@string/invalid_coin_address"
+                android:drawableLeft="@drawable/ic_error"
+                android:visibility="@{viewModel.coinAddressValid ?View.GONE :View.VISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/edit_amount"/>
+
             <EditText
                 android:id="@+id/edit_amount"
                 android:layout_width="match_parent"
@@ -156,12 +159,25 @@
                 android:drawableRight="@drawable/ic_amount"
                 android:hint="@string/amount_title"
                 android:inputType="number"
+                android:maxLines="1"
                 android:paddingBottom="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_8"
                 android:paddingRight="@dimen/dp_8"
                 android:paddingTop="@dimen/dp_10"
-                android:maxLines="1"
-                app:layout_constraintBottom_toTopOf="@+id/edit_note" />
+                app:layout_constraintBottom_toTopOf="@+id/text_amount_invalid" />
+
+            <TextView
+                android:id="@+id/text_amount_invalid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="@string/invalid_send_amount"
+                android:drawableLeft="@drawable/ic_error"
+                android:visibility="@{viewModel.amounValid ?View.GONE :View.VISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/edit_note"/>
 
             <EditText
                 android:id="@+id/edit_note"
@@ -175,11 +191,11 @@
                 android:drawableRight="@drawable/ic_note"
                 android:hint="@string/note_title"
                 android:inputType="text"
+                android:maxLines="1"
                 android:paddingBottom="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_8"
                 android:paddingRight="@dimen/dp_8"
                 android:paddingTop="@dimen/dp_10"
-                android:maxLines="1"
                 app:layout_constraintBottom_toTopOf="@+id/button_send_coin" />
 
             <Button
@@ -198,5 +214,14 @@
                 app:layout_constraintRight_toRightOf="@id/view_send_container" />
 
         </android.support.constraint.ConstraintLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.isLoadingData() ?View.VISIBLE :View.GONE}"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

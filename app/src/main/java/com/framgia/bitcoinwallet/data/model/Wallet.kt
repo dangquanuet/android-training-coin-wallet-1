@@ -1,4 +1,5 @@
 package com.framgia.bitcoinwallet.data.model
 
-data class Wallet(var id: String, var coin: Float, var createAt: Long) {
+class Wallet(var coin: Float, var createAt: String) {
+    constructor() : this(0f,"")
 }

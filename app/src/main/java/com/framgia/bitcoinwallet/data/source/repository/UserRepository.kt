@@ -1,5 +1,7 @@
 package com.framgia.bitcoinwallet.data.source.repository
 
+import com.framgia.bitcoinwallet.data.model.Receiver
+import com.framgia.bitcoinwallet.data.model.SendCoin
 import com.framgia.bitcoinwallet.data.model.Transaction
 import com.framgia.bitcoinwallet.data.model.User
 import com.framgia.bitcoinwallet.data.source.UserDataSource
@@ -9,6 +11,7 @@ import io.reactivex.Single
 
 class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
                      private val userLocalDatasource: UserLocalDatasource?) : UserDataSource {
+
     companion object {
         private var INSTANCE: UserRepository? = null
         @JvmStatic
@@ -41,4 +44,25 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun getCurrentUserId(): Single<String> {
+        return userRemoteDatasource.getCurrentUserId()
+    }
+
+    override fun getCurrentBalance(idUser: String, idWallet: String): Single<Float> {
+        return userRemoteDatasource.getCurrentBalance(idUser, idWallet)
+    }
+
+    override fun checkCoinAddressExist(addressCoin: String): Single<Receiver> {
+        return userRemoteDatasource.checkCoinAddressExist(addressCoin)
+    }
+
+    override fun sendCoin(sendCoin: SendCoin, receiver: Receiver, receiverStringRef: String,
+                          senderStringRef: String, currentBalance: Float): Single<Boolean> {
+        return userRemoteDatasource.sendCoin(sendCoin,receiver, receiverStringRef
+                , senderStringRef, currentBalance)
+    }
+
+    override fun updateUserTransaction(stringRef: String) {
+
+    }
 }

@@ -33,13 +33,13 @@ class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNaviga
     }
 
     override fun observeModelData(view: View) {
-        viewDataBinding?.viewModel?.showAlertDialog?.observe(this, Observer {
+        viewDataBinding.viewModel?.showAlertDialog?.observe(this, Observer {
             if (it != null && it) {
                 showVerifySendDialog(view)
             }
         })
 
-        viewDataBinding?.viewModel?.sendCoinState?.observe(this, Observer {
+        viewDataBinding.viewModel?.sendCoinState?.observe(this, Observer {
             if (it != null && it) {
                 notifyMessage(getString(R.string.send_coin_successed))
             } else {
@@ -50,7 +50,7 @@ class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNaviga
 
     override fun setEvents(view: View) {
         view.button_send_coin.setOnClickListener {
-            viewDataBinding?.viewModel?.verifySendCoin(view.edit_bitcoin_add.text.toString(),
+            viewDataBinding.viewModel?.verifySendCoin(view.edit_bitcoin_add.text.toString(),
                     view.edit_amount.text.toString())
         }
 
@@ -67,12 +67,12 @@ class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNaviga
         builder.setTitle(getString(R.string.dialog_send_title))
                 .setMessage(getString(R.string.dialog_send_message))
                 .setPositiveButton(android.R.string.yes) { dialog, which ->
-                    viewDataBinding?.viewModel?.showAlertDialog?.value = false
-                    viewDataBinding?.viewModel?.sendCoin(view.edit_bitcoin_add.text.toString(),
+                    viewDataBinding.viewModel?.showAlertDialog?.value = false
+                    viewDataBinding.viewModel?.sendCoin(view.edit_bitcoin_add.text.toString(),
                             view.edit_amount.text.toString(), view.edit_note.text.toString())
                 }
                 .setNegativeButton(android.R.string.no) { dialog, which ->
-                    viewDataBinding?.viewModel?.showAlertDialog?.value = false
+                    viewDataBinding.viewModel?.showAlertDialog?.value = false
                 }
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show()

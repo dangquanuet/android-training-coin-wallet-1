@@ -32,9 +32,27 @@ object SharedPreUtils {
         }
     }
 
-    fun getIdUser(context: Context): String {
-        var sharedPref: SharedPreferences =
+    fun getUserId(context: Context): String {
+        /*var sharedPref: SharedPreferences =
                 context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE)
-        return sharedPref?.getString(Constant.PREF_USER_ID_KEY, null)
+        return sharedPref?.getString(Constant.PREF_USER_ID_KEY, null)*/
+        return "1"
+    }
+
+    fun saveWalletAddress(context: Context, address: String) {
+        var editor: SharedPreferences.Editor =
+                context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE).edit()
+
+        with(editor) {
+            putString(Constant.PREF_WALLET_ADDRESS_KEY, address)
+            commit()
+        }
+    }
+
+    fun getCurrentWalletAddress(context: Context): String {
+        /*var sharedPref: SharedPreferences =
+                context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE)
+        return sharedPref?.getString(Constant.PREF_WALLET_ADDRESS_KEY, null)*/
+        return "1"
     }
 }

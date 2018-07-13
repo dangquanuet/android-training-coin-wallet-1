@@ -8,6 +8,7 @@ import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.data.model.Receiver
 import com.framgia.bitcoinwallet.data.model.SendCoin
 import com.framgia.bitcoinwallet.data.source.repository.UserRepository
+import com.framgia.bitcoinwallet.ui.screen.main.MainViewModel
 import com.framgia.bitcoinwallet.util.Constant
 import com.framgia.bitcoinwallet.util.SharedPreUtils
 import java.util.*

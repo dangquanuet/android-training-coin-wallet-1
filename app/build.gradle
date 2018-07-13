@@ -66,5 +66,12 @@ dependencies {
 
     //cardview
     implementation "com.android.support:cardview-v7:$supportLibrayVersion"
+
+    //Zxing
+    implementation "com.journeyapps:zxing-android-embedded:$zxingembeddedVersion"
+    implementation "com.google.zxing:core:$zxingcoreVersion"
+
+    //gson
+    implementation "com.google.code.gson:gson:$gsonVersion"
 }
 apply plugin: 'com.google.gms.google-services'

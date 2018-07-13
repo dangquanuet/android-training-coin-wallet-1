@@ -15,6 +15,7 @@ import android.view.MenuItem
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.data.model.User
 import com.framgia.bitcoinwallet.ui.BaseActivity
+import com.framgia.bitcoinwallet.ui.screen.main.receivecointab.ReceiveFragment
 import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinFragment
 import com.framgia.bitcoinwallet.util.obtainViewModel
 import com.framgia.bitcoinwallet.util.setUpActionBar
@@ -26,6 +27,7 @@ class MainActivity : BaseActivity() {
     private lateinit var navigationView: NavigationView
     private lateinit var toolBar: Toolbar
     private lateinit var drawerToggle: ActionBarDrawerToggle
+    private lateinit var mainViewModel: MainViewModel
 
     override fun navigateLayout(): Boolean {
         return false
@@ -39,6 +41,7 @@ class MainActivity : BaseActivity() {
         setUpToolbar()
         setUpNavigationDrawer()
         setUpViewPager()
+        initMainViewModel()
     }
 
     override fun setEvents() {
@@ -101,9 +104,9 @@ class MainActivity : BaseActivity() {
      */
     private fun createTabFragment(): HashMap<String, Fragment> {
         return HashMap<String, Fragment>().apply {
-            put(getString(R.string.title_transaction), SendCoinFragment.newInstance())
-            put(getString(R.string.title_receive), Fragment())
-            put(getString(R.string.title_send), Fragment())
+            put(getString(R.string.title_transaction), Fragment())
+            put(getString(R.string.title_receive), ReceiveFragment.newInstance())
+            put(getString(R.string.title_send), SendCoinFragment.newInstance())
         }
     }
 
@@ -128,6 +131,10 @@ class MainActivity : BaseActivity() {
         navigationView = findViewById(R.id.navigation_view_main)
         drawerToggle.syncState()
         navigationView.setCheckedItem(R.id.action_transaction)
+    }
+
+    private fun initMainViewModel() {
+        mainViewModel = obtainViewModel(MainViewModel::class.java)
     }
 
     companion object {

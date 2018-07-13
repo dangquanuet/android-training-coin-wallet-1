@@ -15,6 +15,9 @@ buildscript {
     ext.testRunnerVersion = '1.0.2'
     ext.testEspressoVersion = '3.0.2'
     ext.firebaseVersion = '16.0.1'
+    ext.zxingcoreVersion = '3.2.1'
+    ext.zxingembeddedVersion = '3.3.0'
+    ext.gsonVersion = '2.8.5'
     repositories {
         google()
         jcenter()

@@ -17,6 +17,7 @@ class SendCoinViewModel(private val context: Application,
     : AndroidViewModel(context), LifecycleObserver {
 
     var loginState: Boolean = false
+    var sendPermission = true
     var balance = 0F
     lateinit var receiverInfor: Receiver
     val curentBalance: MutableLiveData<String> = MutableLiveData()
@@ -45,7 +46,7 @@ class SendCoinViewModel(private val context: Application,
     fun verifySendCoin(coinAddress: String, amount: String) {
         checkAddressCoinExist(coinAddress)
         checkSendAmount(amount)
-        if (amounValid.value!! && coinAddressValid.value!!) {
+        if (amounValid.value!! && coinAddressValid.value!! && sendPermission) {
             showAlertDialog.value = true
         }
     }
@@ -83,15 +84,22 @@ class SendCoinViewModel(private val context: Application,
         )
     }
 
+    fun resetVariableState() {
+        showAlertDialog.value = false
+        sendPermission = false
+    }
+
     /**
      * Check input receiver coin address is exist or not or duplicate with current address
      */
     private fun checkAddressCoinExist(addressCoin: String) {
-        if (!addressCoin.equals(getCurrentWalletAddress())) { //if differ current add
+        //check empty and duplicate address
+        if (addressCoin != getCurrentWalletAddress() && addressCoin.isNotEmpty()) {
             userRepository.checkCoinAddressExist(addressCoin).subscribe(
                     {
                         coinAddressValid.value = !it.userReceiverId.isEmpty()
                         receiverInfor = it
+                        sendPermission = true
                     },
                     {
                         Log.e(TAG, it.toString())

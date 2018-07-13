@@ -67,12 +67,12 @@ class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNaviga
         builder.setTitle(getString(R.string.dialog_send_title))
                 .setMessage(getString(R.string.dialog_send_message))
                 .setPositiveButton(android.R.string.yes) { dialog, which ->
-                    viewDataBinding.viewModel?.showAlertDialog?.value = false
+                    viewDataBinding.viewModel?.resetVariableState()
                     viewDataBinding.viewModel?.sendCoin(view.edit_bitcoin_add.text.toString(),
                             view.edit_amount.text.toString(), view.edit_note.text.toString())
                 }
                 .setNegativeButton(android.R.string.no) { dialog, which ->
-                    viewDataBinding.viewModel?.showAlertDialog?.value = false
+                    viewDataBinding.viewModel?.resetVariableState()
                 }
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show()

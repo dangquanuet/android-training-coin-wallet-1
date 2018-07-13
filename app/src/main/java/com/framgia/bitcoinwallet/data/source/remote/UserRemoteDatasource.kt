@@ -99,46 +99,31 @@ class UserRemoteDatasource : UserDataSource {
      */
     override fun checkCoinAddressExist(addressCoin: String): Single<Receiver> {
         return Single.create<Receiver> { emitter ->
-            var isExist = false
             var ref: DatabaseReference = mFireDatabase.reference.child(Constant.FIREBASE_USER_REF_KEY)
             ref.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     emitter.onError(error.toException())
                 }
 
-                override fun onDataChange(user: DataSnapshot) {
-                    if (user != null && user.hasChildren()) {
-                        var count = 0
-                        for (userChild: DataSnapshot in user.children) {
-                            if (isExist) return
-                            count++
-                            userChild.child(Constant.FIREBASE_WALLET_REF_KEY).ref.orderByKey()
-                                    .equalTo(addressCoin)
-                                    .addValueEventListener(object : ValueEventListener {
-                                        override fun onCancelled(error: DatabaseError) {
-                                            emitter.onError(error.toException())
-                                        }
-
-                                        override fun onDataChange(wallet: DataSnapshot) {
-                                            if (wallet.value != null) {
-                                                isExist = true
-                                                val walletInfor: Wallet? = wallet.child(
-                                                        wallet.children.elementAt(0).key.toString())
-                                                        .getValue(Wallet::class.java)
-                                                if (walletInfor != null) {
-                                                    emitter.onSuccess(Receiver(userChild.key.toString()
-                                                            , walletInfor.coin))
-                                                }
-                                            }
-
-                                            if (count == user.childrenCount.toInt() && !isExist) {
-                                                //return default obj if coin is not exist
-                                                emitter.onSuccess(
-                                                        Receiver("", 0F))
-                                            }
-                                        }
-                                    })
+                override fun onDataChange(userContain: DataSnapshot) {
+                    var isRunContinue = true
+                    for (user: DataSnapshot in userContain.children) {
+                        if (!isRunContinue) break
+                        for (wallet: DataSnapshot
+                        in user.child(Constant.FIREBASE_WALLET_REF_KEY).children) {
+                            if (!isRunContinue) break
+                            if (wallet.key == addressCoin) {
+                                isRunContinue = false
+                                wallet?.getValue(Wallet::class.java)?.let {
+                                    emitter.onSuccess(Receiver(user.key.toString()
+                                            , it.coin))
+                                }
+                            }
                         }
+                    }
+                    if (isRunContinue) {
+                        emitter.onSuccess(
+                                Receiver("", 0F))
                     }
                 }
             })

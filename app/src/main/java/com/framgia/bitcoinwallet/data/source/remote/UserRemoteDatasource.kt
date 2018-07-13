@@ -7,6 +7,7 @@ import com.framgia.bitcoinwallet.data.source.UserDataSource
 import com.framgia.bitcoinwallet.util.Constant
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -75,8 +76,8 @@ class UserRemoteDatasource : UserDataSource {
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun getCurrentBalance(idUser: String, idWallet: String): Single<Float> {
-        return Single.create<Float> { emitter ->
+    override fun getCurrentBalance(idUser: String, idWallet: String): Observable<Float> {
+        return Observable.create<Float> { emitter ->
             var ref: DatabaseReference =
                     mFireDatabase.getReference("${Constant.FIREBASE_USER_REF_KEY}/$idUser" +
                             "/${Constant.FIREBASE_WALLET_REF_KEY}/$idWallet")
@@ -87,7 +88,7 @@ class UserRemoteDatasource : UserDataSource {
 
                 override fun onDataChange(wallet: DataSnapshot) {
                     val walletReponse: Wallet? = wallet.getValue(Wallet::class.java)
-                    walletReponse?.coin?.let { emitter.onSuccess(it) }
+                    walletReponse?.coin?.let { emitter.onNext(it) }
                 }
             })
         }.subscribeOn(Schedulers.io())

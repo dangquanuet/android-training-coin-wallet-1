@@ -11,4 +11,5 @@ class MainViewModel(private val context: Application,
     : AndroidViewModel(context), LifecycleObserver {
 
     val currentBalance: MutableLiveData<String> = MutableLiveData()
+    val addressCoinScanned: MutableLiveData<String> = MutableLiveData()
 }

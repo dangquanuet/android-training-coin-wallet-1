@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.data.model.User
 import com.framgia.bitcoinwallet.ui.BaseActivity
@@ -19,6 +20,7 @@ import com.framgia.bitcoinwallet.ui.screen.main.receivecointab.ReceiveFragment
 import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinFragment
 import com.framgia.bitcoinwallet.util.obtainViewModel
 import com.framgia.bitcoinwallet.util.setUpActionBar
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -88,6 +90,14 @@ class MainActivity : BaseActivity() {
                 return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        result?.contents?.let {
+            mainViewModel.addressCoinScanned.value = it
+        }
     }
 
     private fun setUpViewPager() {

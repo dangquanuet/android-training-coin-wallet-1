@@ -7,6 +7,7 @@ import com.framgia.bitcoinwallet.data.model.User
 import com.framgia.bitcoinwallet.data.source.UserDataSource
 import com.framgia.bitcoinwallet.data.source.local.UserLocalDatasource
 import com.framgia.bitcoinwallet.data.source.remote.UserRemoteDatasource
+import io.reactivex.Observable
 import io.reactivex.Single
 
 class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
@@ -48,7 +49,7 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
         return userRemoteDatasource.getCurrentUserId()
     }
 
-    override fun getCurrentBalance(idUser: String, idWallet: String): Single<Float> {
+    override fun getCurrentBalance(idUser: String, idWallet: String): Observable<Float> {
         return userRemoteDatasource.getCurrentBalance(idUser, idWallet)
     }
 

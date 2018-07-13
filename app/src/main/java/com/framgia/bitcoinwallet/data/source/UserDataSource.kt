@@ -4,6 +4,7 @@ import com.framgia.bitcoinwallet.data.model.Receiver
 import com.framgia.bitcoinwallet.data.model.SendCoin
 import com.framgia.bitcoinwallet.data.model.Transaction
 import com.framgia.bitcoinwallet.data.model.User
+import io.reactivex.Observable
 import io.reactivex.Single
 
 interface UserDataSource {
@@ -12,7 +13,7 @@ interface UserDataSource {
     fun forgotPassword(email: String): Single<Boolean>
     fun getInforUser(idUser: String): Single<User>
     fun getCurrentUserId(): Single<String>
-    fun getCurrentBalance(idUser: String, idWallet: String): Single<Float>
+    fun getCurrentBalance(idUser: String, idWallet: String): Observable<Float>
     fun sendCoin(sendCoin: SendCoin, receiver: Receiver, receiverStringRef: String
                  , senderStringRef: String, currentBalance: Float): Single<Boolean>
     fun updateUserTransaction(stringRef: String)

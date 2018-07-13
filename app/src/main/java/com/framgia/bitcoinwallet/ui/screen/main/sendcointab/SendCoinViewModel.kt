@@ -94,7 +94,7 @@ class SendCoinViewModel(private val context: Application,
      */
     private fun checkAddressCoinExist(addressCoin: String) {
         //check empty and duplicate address
-        if (!addressCoin.equals(getCurrentWalletAddress()) && !addressCoin.isEmpty()) {
+        if (addressCoin != getCurrentWalletAddress() && addressCoin.isNotEmpty()) {
             userRepository.checkCoinAddressExist(addressCoin).subscribe(
                     {
                         coinAddressValid.value = !it.userReceiverId.isEmpty()

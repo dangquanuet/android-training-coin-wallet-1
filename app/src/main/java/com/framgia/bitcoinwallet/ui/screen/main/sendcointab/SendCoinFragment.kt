@@ -12,6 +12,7 @@ import com.framgia.bitcoinwallet.ui.BaseFragment
 import com.framgia.bitcoinwallet.ui.screen.main.MainActivity
 import com.framgia.bitcoinwallet.ui.screen.main.MainViewModel
 import com.framgia.bitcoinwallet.util.obtainViewModel
+import com.google.zxing.integration.android.IntentIntegrator
 
 class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNavigator {
 
@@ -34,7 +35,7 @@ class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNaviga
     }
 
     override fun startScanScreen() {
-
+        IntentIntegrator(activity).initiateScan()
     }
 
     override fun observeModelData(view: View) {
@@ -56,6 +57,11 @@ class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNaviga
             } else {
                 notifyMessage(getString(R.string.send_coin_failed))
             }
+        })
+
+        //Scanner return result to activity, so we need to observe MainViewModel to get this result
+        mainViewModel.addressCoinScanned?.observe(this, Observer {
+            viewDataBinding.viewModel?.handleScanResults(it.toString())
         })
     }
 

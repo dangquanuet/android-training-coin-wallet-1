@@ -5,12 +5,14 @@ import android.arch.lifecycle.*
 import android.text.TextUtils
 import android.util.Log
 import com.framgia.bitcoinwallet.R
+import com.framgia.bitcoinwallet.data.model.QrCode
 import com.framgia.bitcoinwallet.data.model.Receiver
 import com.framgia.bitcoinwallet.data.model.SendCoin
 import com.framgia.bitcoinwallet.data.source.repository.UserRepository
 import com.framgia.bitcoinwallet.ui.screen.main.MainViewModel
 import com.framgia.bitcoinwallet.util.Constant
 import com.framgia.bitcoinwallet.util.SharedPreUtils
+import com.google.gson.Gson
 import java.util.*
 
 class SendCoinViewModel(private val context: Application,
@@ -28,11 +30,13 @@ class SendCoinViewModel(private val context: Application,
     val amounValid: MutableLiveData<Boolean> = MutableLiveData()
     val showAlertDialog: MutableLiveData<Boolean> = MutableLiveData()
     val sendCoinState: MutableLiveData<Boolean> = MutableLiveData()
+    val amountValue: MutableLiveData<String> = MutableLiveData()
+    val addressCoinValue: MutableLiveData<String> = MutableLiveData()
 
     init {
         coinAddressValid.value = true
         amounValid.value = true
-        isLoadingData.value = true
+        isLoadingData.value = false
         loginState = SharedPreUtils.getLoginState(context)
     }
 
@@ -83,6 +87,14 @@ class SendCoinViewModel(private val context: Application,
                     Log.e(TAG, it.toString())
                 }
         )
+    }
+
+    fun handleScanResults(result: String) {
+        val qrCode = Gson().fromJson(result, QrCode::class.java)
+        qrCode?.let {
+            addressCoinValue.value = it.address
+            if (it.amount != null) amountValue.value = it.amount.toString()
+        }
     }
 
     fun resetVariableState() {

@@ -46,16 +46,16 @@ class ReceiveFragment : BaseFragment<FragmentReceiveBinding>() {
     }
 
     private fun showEditDialog() {
-        val alert = AlertDialog.Builder(activity)
-        val edittext = EditText(activity)
-        edittext.inputType = InputType.TYPE_CLASS_NUMBER
-        alert.setMessage(getString(R.string.enter_amount_title))
-        alert.setView(edittext)
-        alert.setPositiveButton(getString(R.string.request_title)) { dialog, whichButton ->
-            if (edittext.text.isNotEmpty()) {
-                viewDataBinding.viewModel?.requestNewQrCode(edittext.text.toString().toFloat())
+        AlertDialog.Builder(activity).apply {
+            val edittext = EditText(activity)
+            edittext.inputType = InputType.TYPE_CLASS_NUMBER
+            setMessage(getString(R.string.enter_amount_title))
+            setView(edittext)
+            setPositiveButton(getString(R.string.request_title)) { dialog, whichButton ->
+                if (edittext.text.isNotEmpty()) {
+                    viewDataBinding.viewModel?.requestNewQrCode(edittext.text.toString().toFloat())
+                }
             }
-        }
-        alert.show()
+        }.show()
     }
 }

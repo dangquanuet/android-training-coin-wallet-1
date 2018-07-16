@@ -130,30 +130,20 @@ class SendCoinViewModel(private val context: Application,
         // fix login state is true, need to be check loginState
         // and get current User id, current wallet id later
         if (true) {
-            userRepository.getCurrentUserId().subscribe(
-                    {
-                        userRepository
-                                .getCurrentBalance(idUser, idWallet)
-                                .subscribe(
-                                        {
-                                            curentBalance.value = it.toString()
-                                            balance = it
-                                            isLoadingData.value = false
-                                        },
-                                        {
-                                            notifyMessage.value = context
-                                                    .getString(R.string.error_message)
-                                            Log.e(TAG, it.toString())
-                                        }
-                                )
-                    },
-                    {
-                        notifyMessage.value = context
-                                .getString(R.string.error_message)
-                        Log.e(TAG, it.toString())
-                    }
-
-            )
+            userRepository
+                    .getCurrentBalance(idUser, idWallet)
+                    .subscribe(
+                            {
+                                curentBalance.value = it.toString()
+                                balance = it
+                                isLoadingData.value = false
+                            },
+                            {
+                                notifyMessage.value = context
+                                        .getString(R.string.error_message)
+                                Log.e(TAG, it.toString())
+                            }
+                    )
         }
     }
 

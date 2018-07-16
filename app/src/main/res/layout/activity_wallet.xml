@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.framgia.bitcoinwallet.ui.screen.wallet.WalletViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_wallet"
+            android:layout_width="0dp"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/color_deep_purple_50_500"
+            android:elevation="@dimen/dp_4"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@string/title_personal_wallet"
+            app:titleTextColor="@android:color/white" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constrain_current_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/shape_white_radius_container"
+            android:elevation="@dimen/dp_5"
+            android:padding="@dimen/dp_10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_wallet">
+
+            <TextView
+                android:id="@+id/text_wallet_current"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/bitcoin_cash_title"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/image_change_cur_wallet"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_wallet_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet_title"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/image_change_cur_wallet"
+                app:layout_constraintTop_toBottomOf="@+id/text_wallet_current" />
+
+            <View
+                android:id="@+id/view_div"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="@dimen/dp_8"
+                android:background="@color/color_gray_50_300"
+                app:layout_constraintTop_toBottomOf="@+id/text_wallet_title" />
+
+            <ImageView
+                android:id="@+id/image_change_cur_wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_change_gray"
+                app:layout_constraintBottom_toBottomOf="@+id/text_wallet_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_wallet_current" />
+
+            <ImageView
+                android:id="@+id/image_cur_wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:background="@drawable/shape_personal_wallet_purple"
+                android:padding="@dimen/dp_4"
+                android:src="@drawable/ic_bitcoin_wallet_while"
+                app:layout_constraintTop_toBottomOf="@+id/view_div" />
+
+            <ImageView
+                android:id="@+id/image_cur_wallet_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_navigate_next_gray"
+                app:layout_constraintBottom_toBottomOf="@+id/image_cur_wallet"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/image_cur_wallet" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:text="@{ viewModel.getWalletName() }"
+                app:layout_constraintBottom_toTopOf="@+id/text_current_balance"
+                app:layout_constraintLeft_toRightOf="@+id/image_cur_wallet"
+                app:layout_constraintRight_toLeftOf="@+id/image_cur_wallet_show" />
+
+            <TextView
+                android:id="@+id/text_current_balance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:text="@{ viewModel.curentBalance }"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintBottom_toBottomOf="@+id/image_cur_wallet"
+                app:layout_constraintLeft_toRightOf="@+id/image_cur_wallet"
+                app:layout_constraintRight_toLeftOf="@+id/image_cur_wallet_show" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/shape_white_radius_container"
+            android:elevation="@dimen/dp_5"
+            android:padding="@dimen/dp_10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constrain_current_container">
+
+            <TextView
+                android:id="@+id/text_wallet_other"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/other_wallet_title"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/image_add_wallet"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view_div_1"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="@dimen/dp_8"
+                android:background="@color/color_gray_50_300"
+                app:layout_constraintTop_toBottomOf="@+id/text_wallet_other" />
+
+            <ImageView
+                android:id="@+id/image_add_wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add_circle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_wallet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/view_div_1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>

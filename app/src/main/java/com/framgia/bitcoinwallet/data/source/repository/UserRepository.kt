@@ -1,14 +1,12 @@
 package com.framgia.bitcoinwallet.data.source.repository
 
-import com.framgia.bitcoinwallet.data.model.Receiver
-import com.framgia.bitcoinwallet.data.model.SendCoin
-import com.framgia.bitcoinwallet.data.model.Transaction
-import com.framgia.bitcoinwallet.data.model.User
+import com.framgia.bitcoinwallet.data.model.*
 import com.framgia.bitcoinwallet.data.source.UserDataSource
 import com.framgia.bitcoinwallet.data.source.local.UserLocalDatasource
 import com.framgia.bitcoinwallet.data.source.remote.UserRemoteDatasource
 import io.reactivex.Observable
 import io.reactivex.Single
+import java.util.ArrayList
 
 class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
                      private val userLocalDatasource: UserLocalDatasource?) : UserDataSource {
@@ -59,8 +57,16 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
 
     override fun sendCoin(sendCoin: SendCoin, receiver: Receiver, receiverStringRef: String,
                           senderStringRef: String, currentBalance: Float): Single<Boolean> {
-        return userRemoteDatasource.sendCoin(sendCoin,receiver, receiverStringRef
+        return userRemoteDatasource.sendCoin(sendCoin, receiver, receiverStringRef
                 , senderStringRef, currentBalance)
+    }
+
+    override fun getUserWallets(idUser: String): Observable<ArrayList<Wallet>> {
+        return userRemoteDatasource.getUserWallets(idUser)
+    }
+
+    override fun addWallet(idUser: String, walletName: String): Observable<Wallet> {
+        return userRemoteDatasource.addWallet(idUser, walletName)
     }
 
     override fun updateUserTransaction(stringRef: String) {

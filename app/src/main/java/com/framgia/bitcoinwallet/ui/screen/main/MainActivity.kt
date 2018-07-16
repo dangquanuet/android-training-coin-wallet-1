@@ -18,6 +18,7 @@ import com.framgia.bitcoinwallet.data.model.User
 import com.framgia.bitcoinwallet.ui.BaseActivity
 import com.framgia.bitcoinwallet.ui.screen.main.receivecointab.ReceiveFragment
 import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinFragment
+import com.framgia.bitcoinwallet.ui.screen.wallet.WalletActivity
 import com.framgia.bitcoinwallet.util.obtainViewModel
 import com.framgia.bitcoinwallet.util.setUpActionBar
 import com.google.zxing.integration.android.IntentIntegrator
@@ -53,13 +54,14 @@ class MainActivity : BaseActivity() {
                 R.id.action_receive -> pager_main.currentItem = TAB_RECEIVE_POSITION
                 R.id.action_transaction -> pager_main.currentItem = TAB_TRANSACTION_POSITION
                 R.id.action_send -> pager_main.currentItem = TAB_SEND_POSITION
+                R.id.action_bitcoin_wallet -> startWalletActivity()
             }
             item.isChecked = true
             drawerLayout.closeDrawers()
             return@setNavigationItemSelectedListener true
         }
 
-        pager_main.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+        pager_main.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
             }
@@ -69,11 +71,11 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-               when(position) {
-                   TAB_TRANSACTION_POSITION -> navigationView.setCheckedItem(R.id.action_transaction)
-                   TAB_SEND_POSITION -> navigationView.setCheckedItem(R.id.action_send)
-                   TAB_RECEIVE_POSITION -> navigationView.setCheckedItem(R.id.action_receive)
-               }
+                when (position) {
+                    TAB_TRANSACTION_POSITION -> navigationView.setCheckedItem(R.id.action_transaction)
+                    TAB_SEND_POSITION -> navigationView.setCheckedItem(R.id.action_send)
+                    TAB_RECEIVE_POSITION -> navigationView.setCheckedItem(R.id.action_receive)
+                }
             }
 
         })
@@ -145,6 +147,10 @@ class MainActivity : BaseActivity() {
 
     private fun initMainViewModel() {
         mainViewModel = obtainViewModel(MainViewModel::class.java)
+    }
+
+    private fun startWalletActivity() {
+        startActivity(WalletActivity.getWalletActivityIntent(this))
     }
 
     companion object {

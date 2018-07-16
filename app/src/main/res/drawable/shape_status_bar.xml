@@ -3,4 +3,6 @@
     <gradient
         android:endColor="@color/color_deep_purple_50_500"
         android:startColor="@color/color_deep_purple_50_300" />
+
+    <corners android:radius="@dimen/dp_2" />
 </shape>

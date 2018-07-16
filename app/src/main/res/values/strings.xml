@@ -50,4 +50,8 @@
     <string name="dialog_send_message">Are you sure you want to transfer money to this address?</string>
     <string name="send_coin_successed">Send successed</string>
     <string name="send_coin_failed">Send failed</string>
+    <string name="action_request_amount">Request Custom Amount</string>
+    <string name="genrerate_address">Generate a new address</string>
+    <string name="request_title">Request</string>
+    <string name="enter_amount_title">Enter Your Amount</string>
 </resources>

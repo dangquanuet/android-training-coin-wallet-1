@@ -10,9 +10,12 @@ import android.widget.Toast
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.ui.BaseFragment
 import com.framgia.bitcoinwallet.ui.screen.main.MainActivity
+import com.framgia.bitcoinwallet.ui.screen.main.MainViewModel
 import com.framgia.bitcoinwallet.util.obtainViewModel
 
 class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNavigator {
+
+    private lateinit var mainViewModel: MainViewModel
 
     companion object {
         fun newInstance() = SendCoinFragment()
@@ -26,6 +29,8 @@ class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNaviga
             viewModel = (activity as MainActivity).obtainViewModel(SendCoinViewModel::class.java)
             viewModel?.let { lifecycle.addObserver(it) }
         }
+
+        mainViewModel = (activity as MainActivity).obtainViewModel(MainViewModel::class.java)
     }
 
     override fun startScanScreen() {
@@ -33,6 +38,12 @@ class SendCoinFragment : BaseFragment<FragmentSendCoinBinding>(), SendCoinNaviga
     }
 
     override fun observeModelData(view: View) {
+        //when current balance is updated by send, update this data in MainViewModel
+        // then Receiver Tab can knowing that change
+        viewDataBinding.viewModel?.curentBalance?.observe(this, Observer {
+            mainViewModel.currentBalance?.value = it
+        })
+
         viewDataBinding.viewModel?.showAlertDialog?.observe(this, Observer {
             if (it != null && it) {
                 showVerifySendDialog(view)

@@ -1,6 +1,7 @@
 package com.framgia.bitcoinwallet.util
 
 import android.databinding.BindingAdapter
+import android.graphics.Bitmap
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 
@@ -9,11 +10,13 @@ import com.bumptech.glide.Glide
  * By: Sang
  * Description:
  */
-object BindingAdapters {
 
-    @BindingAdapter("imageResource")
-    @JvmStatic
-    fun setImageResource(view: ImageView, res: Int) {
-        Glide.with(view.context).load(res).into(view)
-    }
+@BindingAdapter("imageResource")
+fun setImageResource(view: ImageView, res: Int) {
+    Glide.with(view.context).load(res).into(view)
+}
+
+@BindingAdapter("imageBm")
+fun setImageBm(view: ImageView, bitmap: Bitmap) {
+    Glide.with(view.context).load(bitmap).into(view)
 }

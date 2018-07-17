@@ -35,15 +35,19 @@ class UserRemoteDatasource : UserDataSource {
 
     override fun singIn(email: String, password: String): Single<User> {
         return Single.create<User> { e ->
-            var user: User
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    var userFirebase = mAuth.currentUser
-                    user = User(userFirebase!!.uid, userFirebase.email!!)
-                    e.onSuccess(user)
+            try {
+                var user: User
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        var userFirebase = mAuth.currentUser
+                        user = User(userFirebase!!.uid, userFirebase.email!!)
+                        e.onSuccess(user)
+                    } else {
+                        e.onSuccess(User())
+                    }
                 }
-            }.addOnFailureListener {
-                e.onError(it)
+            } catch (ex: Exception) {
+                e.onError(ex)
             }
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -62,11 +66,13 @@ class UserRemoteDatasource : UserDataSource {
     }
 
     override fun getInforUser(idUser: String): Single<User> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Single.create<User>({}).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun getInforTransactionUser(idUser: String): Single<Transaction> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Single.create<Transaction>({}).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun getCurrentUserId(): Single<String> {

@@ -36,11 +36,11 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
     }
 
     override fun getInforUser(idUser: String): Single<User> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return userRemoteDatasource.getInforUser(idUser)
     }
 
     override fun getInforTransactionUser(idUser: String): Single<Transaction> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+     return userRemoteDatasource.getInforTransactionUser(idUser)
     }
 
     override fun getCurrentUserId(): Single<String> {

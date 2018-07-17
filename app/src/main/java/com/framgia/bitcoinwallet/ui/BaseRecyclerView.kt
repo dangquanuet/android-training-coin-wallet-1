@@ -1,13 +1,12 @@
 package com.framgia.bitcoinwallet.ui
 
-import android.content.Context
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 
 abstract class BaseRecyclerView <ViewHoler :
 BaseRecyclerViewHolder<View, Item>, View : ViewDataBinding, Item : Any>
-(val context: Context, val items: List<Item>)
+(val items: List<Item>)
     : RecyclerView.Adapter<BaseRecyclerViewHolder<View, Item>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)

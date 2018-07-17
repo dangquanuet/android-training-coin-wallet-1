@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
-import android.databinding.DataBindingUtil
 import android.support.v7.widget.Toolbar
 import android.text.InputType
 import android.widget.EditText
@@ -18,9 +17,8 @@ import com.framgia.bitcoinwallet.util.obtainViewModel
 import com.framgia.bitcoinwallet.util.setUpActionBar
 import kotlinx.android.synthetic.main.activity_wallet.*
 
-class WalletActivity : BaseActivity(), BaseRecyclerViewHolder.OnItemClickListener<Wallet> {
+class WalletActivity : BaseActivity<ActivityWalletBinding>(), BaseRecyclerViewHolder.OnItemClickListener<Wallet> {
 
-    private lateinit var viewDataBinding: ActivityWalletBinding
     private lateinit var toolBar: Toolbar
 
     companion object {
@@ -40,9 +38,23 @@ class WalletActivity : BaseActivity(), BaseRecyclerViewHolder.OnItemClickListene
     override fun initComponents() {
         setUpToolbar()
         initViewModel()
-        observeViewModel()
+    }
 
-        viewDataBinding.viewModel?.notifyMessage?.observe(this,
+    override fun setEvents() {
+        image_change_cur_wallet.setOnClickListener { binding.viewModel?.changeCurrentWallet() }
+        image_add_wallet.setOnClickListener { showEditDialog() }
+    }
+
+    override fun observeViewModel() {
+        binding.viewModel?.wallets?.observe(this, Observer {
+            it?.let { recycler_wallet.adapter = WalletAdapter( it, this) }
+        })
+
+        binding.viewModel?.newWalletAdded?.observe(this, Observer {
+            it?.let { recycler_wallet.adapter.notifyItemInserted(recycler_wallet.adapter.itemCount) }
+        })
+
+        binding.viewModel?.notifyMessage?.observe(this,
                 android.arch.lifecycle.Observer {
                     if (it != null) {
                         notify(it)
@@ -50,20 +62,12 @@ class WalletActivity : BaseActivity(), BaseRecyclerViewHolder.OnItemClickListene
                 })
     }
 
-    override fun setEvents() {
-        image_change_cur_wallet.setOnClickListener { viewDataBinding.viewModel?.changeCurrentWallet() }
-        image_add_wallet.setOnClickListener { showEditDialog() }
-    }
-
     override fun onItemClick(position: Int, data: Wallet) {
 
     }
 
     private fun initViewModel() {
-        viewDataBinding = DataBindingUtil.setContentView(this,
-                R.layout.activity_wallet)
-        viewDataBinding.apply {
-            setLifecycleOwner(this@WalletActivity)
+        binding.apply {
             viewModel = this@WalletActivity.obtainViewModel(WalletViewModel::class.java)
             viewModel?.let { lifecycle.addObserver(it) }
         }
@@ -76,16 +80,6 @@ class WalletActivity : BaseActivity(), BaseRecyclerViewHolder.OnItemClickListene
         }
     }
 
-    private fun observeViewModel() {
-        viewDataBinding.viewModel?.wallets?.observe(this, Observer {
-            it?.let { recycler_wallet.adapter = WalletAdapter(this, it, this) }
-        })
-
-        viewDataBinding.viewModel?.newWalletAdded?.observe(this, Observer {
-            it?.let { recycler_wallet.adapter.notifyItemInserted(recycler_wallet.adapter.itemCount) }
-        })
-    }
-
     private fun showEditDialog() {
         AlertDialog.Builder(this).apply {
             val edittext = EditText(this@WalletActivity)
@@ -94,7 +88,7 @@ class WalletActivity : BaseActivity(), BaseRecyclerViewHolder.OnItemClickListene
             setView(edittext)
             setPositiveButton(getString(R.string.ok_title)) { dialog, whichButton ->
                 if (edittext.text.isNotEmpty()) {
-                    viewDataBinding.viewModel?.addWallet(edittext.text.toString())
+                    binding.viewModel?.addWallet(edittext.text.toString())
                 }
             }
             setNegativeButton(getString(R.string.cancel_title)) { dialog, whichButton ->

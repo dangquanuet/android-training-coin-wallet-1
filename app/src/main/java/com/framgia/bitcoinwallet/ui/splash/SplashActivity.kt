@@ -1,27 +1,23 @@
 package com.framgia.bitcoinwallet.ui.splash
 
+import android.os.Bundle
 import android.os.Handler
+import android.os.PersistableBundle
+import android.support.v7.app.AppCompatActivity
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.ui.BaseActivity
 import com.framgia.bitcoinwallet.ui.screen.login.LoginActivity
 import com.framgia.bitcoinwallet.ui.screen.main.MainActivity
 import com.framgia.bitcoinwallet.util.SharedPreUtils
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : AppCompatActivity() {
 
-    override fun navigateLayout(): Boolean {
-        return false
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        setEvents()
     }
 
-    override fun getLayoutRes(): Int {
-        return R.layout.activity_splash
-    }
-
-    override fun initComponents() {
-        //do nothing
-    }
-
-    override fun setEvents() {
+    private fun setEvents() {
         Handler().postDelayed(Runnable {
             when (checkLoginState()) {
                 true -> startMainScreen()

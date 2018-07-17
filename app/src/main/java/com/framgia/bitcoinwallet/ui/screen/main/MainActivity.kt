@@ -1,6 +1,5 @@
 package com.framgia.bitcoinwallet.ui.screen.main
 
-import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.content.Intent
 import android.support.design.widget.NavigationView
@@ -8,13 +7,11 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.framgia.bitcoinwallet.R
-import com.framgia.bitcoinwallet.data.model.User
+import com.framgia.bitcoinwallet.databinding.ActivityMainBinding
 import com.framgia.bitcoinwallet.ui.BaseActivity
 import com.framgia.bitcoinwallet.ui.screen.main.receivecointab.ReceiveFragment
 import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinFragment
@@ -24,7 +21,7 @@ import com.framgia.bitcoinwallet.util.setUpActionBar
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -79,6 +76,10 @@ class MainActivity : BaseActivity() {
             }
 
         })
+    }
+
+    override fun observeViewModel() {
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

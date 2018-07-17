@@ -54,4 +54,11 @@
     <string name="genrerate_address">Generate a new address</string>
     <string name="request_title">Request</string>
     <string name="enter_amount_title">Enter Your Amount</string>
+    <string name="wallet_title">Instant transactions with low fees</string>
+    <string name="bitcoin_cash_title">Current Bitcoin Cash (BCH)</string>
+    <string name="other_wallet_title">Your other wallet</string>
+    <string name="ok_title">Ok</string>
+    <string name="cancel_title">Cancel</string>
+    <string name="wallet_name_exist_title">Wallet name is existed!</string>
+    <string name="enter_wallet_name_title">Enter Your New Wallet Name</string>
 </resources>

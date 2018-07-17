@@ -1,11 +1,9 @@
 package com.framgia.bitcoinwallet.data.source
 
-import com.framgia.bitcoinwallet.data.model.Receiver
-import com.framgia.bitcoinwallet.data.model.SendCoin
-import com.framgia.bitcoinwallet.data.model.Transaction
-import com.framgia.bitcoinwallet.data.model.User
+import com.framgia.bitcoinwallet.data.model.*
 import io.reactivex.Observable
 import io.reactivex.Single
+import java.util.ArrayList
 
 interface UserDataSource {
     fun singIn(email: String, password: String): Single<User>
@@ -19,6 +17,8 @@ interface UserDataSource {
     fun updateUserTransaction(stringRef: String)
     fun checkCoinAddressExist(addressCoin: String): Single<Receiver>
     fun getInforTransactionUser(idUser: String): Single<Transaction>
+    fun getUserWallets(idUser: String): Observable<ArrayList<Wallet>>
+    fun addWallet(idUser: String, walletName: String): Observable<Wallet>
     interface local {
         fun saveUser(user: User)
         fun updateUser(user: User)

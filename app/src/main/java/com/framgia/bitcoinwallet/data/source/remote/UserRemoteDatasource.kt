@@ -1,6 +1,5 @@
 package com.framgia.bitcoinwallet.data.source.remote
 
-import android.util.Log
 import com.framgia.bitcoinwallet.data.model.*
 import com.framgia.bitcoinwallet.data.model.Transaction
 import com.framgia.bitcoinwallet.data.source.UserDataSource
@@ -11,6 +10,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 class UserRemoteDatasource : UserDataSource {
 
@@ -154,6 +154,58 @@ class UserRemoteDatasource : UserDataSource {
             }
         }
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getUserWallets(idUser: String): Observable<ArrayList<Wallet>> {
+        return Observable.create<ArrayList<Wallet>> {
+            var walletRef = mFireDatabase.getReference(
+                    "${Constant.FIREBASE_USER_REF_KEY}/$idUser" +
+                            "/${Constant.FIREBASE_WALLET_REF_KEY}")
+            walletRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(wallets: DataSnapshot) {
+                    when (wallets.hasChildren()) {
+                        true -> {
+                            var walletRes = ArrayList<Wallet>()
+                            for (wallet: DataSnapshot in wallets.children) {
+                                walletRes.add(wallet.getValue(Wallet::class.java)!!.apply {
+                                    id = wallet.key.toString()
+                                })
+                            }
+                            it.onNext(walletRes)
+                        }
+
+                        else -> it.onNext(ArrayList())
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    it.onError(error.toException())
+                }
+
+            })
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun addWallet(idUser: String, walletName: String): Observable<Wallet> {
+        return Observable.create<Wallet> {
+            try {
+                var walletRef = mFireDatabase.getReference(
+                        "${Constant.FIREBASE_USER_REF_KEY}/$idUser" +
+                                "/${Constant.FIREBASE_WALLET_REF_KEY}")
+                val newKey = walletRef.push()
+                Wallet(0F, Date().toString(), walletName).apply {
+                    newKey.setValue(this)
+                    id = newKey.toString()
+                    it.onNext(this)
+                }
+
+            } catch (e: Exception) {
+                it.onError(e)
+            }
+
+        }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 

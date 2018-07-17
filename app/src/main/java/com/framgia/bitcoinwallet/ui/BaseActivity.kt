@@ -1,5 +1,8 @@
 package com.framgia.bitcoinwallet.ui
 
+import android.arch.lifecycle.LifecycleOwner
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
@@ -9,14 +12,17 @@ import android.support.v7.app.AppCompatActivity
  * By: Sang
  * Description:
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<ViewBinding : ViewDataBinding> : AppCompatActivity(), LifecycleOwner {
+
+    lateinit var binding: ViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (navigateLayout()) {
             return
         }
-        setContentView(getLayoutRes())
+        binding = DataBindingUtil.setContentView(this, getLayoutRes())
+        binding.setLifecycleOwner(this@BaseActivity)
         initComponents()
         setEvents()
     }
@@ -29,4 +35,6 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun initComponents()
 
     abstract fun setEvents()
+
+    abstract fun observeViewModel()
 }

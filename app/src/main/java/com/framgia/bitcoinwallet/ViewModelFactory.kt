@@ -12,6 +12,7 @@ import com.framgia.bitcoinwallet.ui.screen.login.LoginViewModel
 import com.framgia.bitcoinwallet.ui.screen.main.MainViewModel
 import com.framgia.bitcoinwallet.ui.screen.main.receivecointab.ReceiveViewModel
 import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinViewModel
+import com.framgia.bitcoinwallet.ui.screen.wallet.WalletViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -38,6 +39,9 @@ class ViewModelFactory private constructor(
 
                     isAssignableFrom(MainViewModel::class.java) ->
                         MainViewModel(application, userRepository)
+
+                    isAssignableFrom(WalletViewModel::class.java) ->
+                        WalletViewModel(application, userRepository)
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
                 }

@@ -1,6 +1,5 @@
 package com.framgia.bitcoinwallet.ui.screen.forgotpasswd
 
-import android.databinding.DataBindingUtil
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.ui.BaseActivity
 import android.os.Build
@@ -10,10 +9,7 @@ import com.framgia.bitcoinwallet.databinding.ActivityForgotPasswdBinding
 import com.framgia.bitcoinwallet.util.obtainViewModel
 import kotlinx.android.synthetic.main.activity_forgot_passwd.*
 
-class ForgotPassWdActivity : BaseActivity(), ForgotPassWdNavigator {
-
-    private lateinit var viewDataBinding: ActivityForgotPasswdBinding
-
+class ForgotPassWdActivity : BaseActivity<ActivityForgotPasswdBinding>(), ForgotPassWdNavigator {
 
     override fun navigateLayout(): Boolean {
         return false
@@ -26,8 +22,10 @@ class ForgotPassWdActivity : BaseActivity(), ForgotPassWdNavigator {
     override fun initComponents() {
         setUpWindowBackGround()
         initViewModel()
+    }
 
-        viewDataBinding.viewModel?.notifyMessage?.observe(this,
+    override fun observeViewModel() {
+        binding.viewModel?.notifyMessage?.observe(this,
                 android.arch.lifecycle.Observer {
                     if (it != null) {
                         notify(it)
@@ -56,18 +54,15 @@ class ForgotPassWdActivity : BaseActivity(), ForgotPassWdNavigator {
     }
 
     private fun sendMail() {
-        viewDataBinding.viewModel?.sendEmail(edit_email.text?.toString() ?: "")
+        binding.viewModel?.sendEmail(edit_email.text?.toString() ?: "")
     }
 
     private fun retrySendVerify() {
-        viewDataBinding.viewModel?.retryVerify(edit_email.text?.toString() ?: "")
+        binding.viewModel?.retryVerify(edit_email.text?.toString() ?: "")
     }
 
     private fun initViewModel() {
-        viewDataBinding = DataBindingUtil.setContentView(this,
-                R.layout.activity_forgot_passwd)
-        viewDataBinding.setLifecycleOwner(this)
-        viewDataBinding.viewModel = this.obtainViewModel(ForgotPassWdViewModel::class.java)
+        binding.viewModel = this.obtainViewModel(ForgotPassWdViewModel::class.java)
     }
 
     /**

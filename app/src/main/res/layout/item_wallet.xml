@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.framgia.bitcoinwallet.ui.screen.wallet.ItemWalletViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_5">
+
+        <ImageView
+            android:id="@+id/image_item_wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_personal_wallet_yellow"
+            android:padding="@dimen/dp_4"
+            android:src="@drawable/ic_bitcoin_wallet_while"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_item_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_navigate_next_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/image_item_wallet"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/image_item_wallet" />
+
+        <TextView
+            android:id="@+id/text_item_wallet_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:text="@{ viewModel.wallet.name }"
+            app:layout_constraintBottom_toTopOf="@id/text_item_wallet_balance"
+            app:layout_constraintLeft_toRightOf="@+id/image_item_wallet"
+            app:layout_constraintRight_toLeftOf="@+id/image_item_show" />
+
+        <TextView
+            android:id="@+id/text_item_wallet_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:text="@{ viewModel.coinToString() }"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="@+id/image_item_wallet"
+            app:layout_constraintLeft_toRightOf="@+id/image_item_wallet"
+            app:layout_constraintRight_toLeftOf="@+id/image_item_show" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

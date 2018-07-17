@@ -53,6 +53,6 @@ object SharedPreUtils {
         /*var sharedPref: SharedPreferences =
                 context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE)
         return sharedPref?.getString(Constant.PREF_WALLET_ADDRESS_KEY, null)*/
-        return "1"
+        return "erys346sdjh25346xzdh"
     }
 }

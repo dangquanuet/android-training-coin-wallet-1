@@ -64,8 +64,10 @@ class WalletViewModel(private val context: Application,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            filterWallet(it)?.let { it1 -> walletsTmp.addAll(it1) }
-                            wallets.value = walletsTmp
+                            filterWallet(it)?.let {
+                                walletsTmp.addAll(it)
+                                wallets.value = it
+                            }
                         },
                         {
 

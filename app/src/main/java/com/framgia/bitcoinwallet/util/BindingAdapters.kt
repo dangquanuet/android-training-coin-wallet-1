@@ -26,5 +26,9 @@ fun setImageBm(view: ImageView, bitmap: Bitmap) {
 
 @BindingAdapter("walletItems")
 fun setWalletItems(view: RecyclerView, item: MutableList<Wallet>?) {
-    item?.let { (view.adapter as WalletAdapter).updateData(it) }
+    when (view.adapter) {
+        is WalletAdapter -> item?.let {
+            (view.adapter as WalletAdapter).updateData(it)
+        }
+    }
 }

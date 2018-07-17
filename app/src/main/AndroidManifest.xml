@@ -23,6 +23,7 @@
         <activity android:name=".ui.screen.forgotpasswd.ForgotPassWdActivity" />
         <activity android:name=".ui.screen.signup.SignUpActivity" />
         <activity android:name=".ui.screen.wallet.WalletActivity" />
+        <activity android:name=".ui.screen.detailswallet.DetailsWalletActivity"/>
     </application>
 
 </manifest>

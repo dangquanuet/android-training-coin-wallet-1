@@ -14,15 +14,18 @@ import com.framgia.bitcoinwallet.data.model.Wallet
 import com.framgia.bitcoinwallet.databinding.ActivityWalletBinding
 import com.framgia.bitcoinwallet.ui.BaseActivity
 import com.framgia.bitcoinwallet.ui.BaseRecyclerViewHolder
+import com.framgia.bitcoinwallet.ui.screen.detailswallet.DetailsWalletActivity
 import com.framgia.bitcoinwallet.util.obtainViewModel
 import com.framgia.bitcoinwallet.util.setUpActionBar
 import kotlinx.android.synthetic.main.activity_wallet.*
 
-class WalletActivity : BaseActivity<ActivityWalletBinding>(), BaseRecyclerViewHolder.OnItemClickListener<Wallet> {
+class WalletActivity : BaseActivity<ActivityWalletBinding>(),
+        BaseRecyclerViewHolder.OnItemClickListener<Wallet>, WalletNavigator {
 
     private lateinit var toolBar: Toolbar
     private var currentWalletChoosed: Int = -1
     private var isChangeClick: Boolean = false
+    private var isAllowChange: Boolean = true
     private var walletAdapter: WalletAdapter? = null
 
     companion object {
@@ -53,11 +56,17 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>(), BaseRecyclerViewHo
         image_change_cur_wallet.setOnClickListener { showRadioButtonChoose() }
         button_change_wallet.setOnClickListener { showRadioButtonChoose() }
         button_ok.setOnClickListener { changeWallet() }
+        toolbar_wallet.setNavigationOnClickListener { finish() }
+        image_cur_wallet_show.setOnClickListener {
+            binding.viewModel?.currentWallet?.value?.let {
+                goWalletDetailsScreen(it)
+            }
+        }
     }
 
     override fun observeViewModel() {
         binding.viewModel?.newWalletAdded?.observe(this, Observer {
-            it?.let { recycler_wallet.adapter.notifyItemInserted(recycler_wallet.adapter.itemCount) }
+            it?.let { walletAdapter?.updateAddWallet(it) }
         })
 
         binding.viewModel?.notifyMessage?.observe(this,
@@ -70,11 +79,16 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>(), BaseRecyclerViewHo
 
     override fun onItemClick(position: Int, data: Wallet) {
         if (isChangeClick) { //case check item
-            walletAdapter?.notifyPreviousItemCheck(currentWalletChoosed)
+            walletAdapter?.notifyPreviousItemCheck(position)
             currentWalletChoosed = position
+            isAllowChange = data.isChoosed
         } else { //case open details screen
-
+            goWalletDetailsScreen(data)
         }
+    }
+
+    override fun goWalletDetailsScreen(item: Wallet) {
+        startActivity(DetailsWalletActivity.getDetailsWallet(this, item))
     }
 
     private fun initViewModel() {
@@ -99,7 +113,12 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>(), BaseRecyclerViewHo
     private fun changeWallet() {
         isChangeClick = false
         binding.viewModel?.isChangeWalletClick?.value = false
-        binding.viewModel?.changeWallet(currentWalletChoosed)
+        if (currentWalletChoosed != -1 && isAllowChange) {
+            binding.viewModel?.changeWallet(currentWalletChoosed)
+            currentWalletChoosed = -1
+        } else {
+            walletAdapter?.showCheckBoxChoose(false)
+        }
     }
 
     private fun showEditDialog() {

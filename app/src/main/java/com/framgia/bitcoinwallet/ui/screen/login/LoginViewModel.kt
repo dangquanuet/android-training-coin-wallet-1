@@ -14,10 +14,12 @@ class LoginViewModel(private val context: Application, private val userRepositor
 
     val notifyMessage: MutableLiveData<String> = MutableLiveData()
     val loading: MutableLiveData<Boolean> = MutableLiveData()
+    val email: MutableLiveData<String> = MutableLiveData()
+    val password: MutableLiveData<String> = MutableLiveData()
 
-    fun clickSignIn(email: String, passWd: String) {
+    fun clickSignIn() {
         loading.value = true
-        userRepository.singIn(email, passWd).subscribe({
+        userRepository.singIn(email.value.toString(), password.value.toString()).subscribe({
             loading.value = false
             when (it.id) {
                 null -> {

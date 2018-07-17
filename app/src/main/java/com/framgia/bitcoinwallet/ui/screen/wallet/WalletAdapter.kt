@@ -1,5 +1,6 @@
 package com.framgia.bitcoinwallet.ui.screen.wallet
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.framgia.bitcoinwallet.data.model.Wallet
@@ -30,6 +31,7 @@ class WalletAdapter(var wallets: MutableList<Wallet>,
                     listener.onItemClick(adapterPosition, item)
                 }
                 checkboxItemWallet.setOnClickListener {
+                    item.isChoosed = checkboxItemWallet.isChecked
                     listener.onItemClick(adapterPosition, item)
                 }
                 if (previousChoosed != -1 && adapterPosition == previousChoosed) {
@@ -40,8 +42,14 @@ class WalletAdapter(var wallets: MutableList<Wallet>,
         }
     }
 
+    fun updateAddWallet(wallet: Wallet) {
+        wallets.add(wallet)
+        notifyItemInserted(itemCount)
+    }
+
     fun notifyPreviousItemCheck(currentPosistion: Int) {
-        if (previousChoosed != -1) {
+        if (previousChoosed != -1 && previousChoosed!= currentPosistion) {
+            wallets[previousChoosed].isChoosed = false
             notifyItemChanged(previousChoosed)
         }
         previousChoosed = currentPosistion

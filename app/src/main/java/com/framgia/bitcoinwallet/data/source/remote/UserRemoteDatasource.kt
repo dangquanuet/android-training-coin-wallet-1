@@ -65,7 +65,21 @@ class UserRemoteDatasource : UserDataSource {
     }
 
     override fun getInforUser(idUser: String): Single<User> {
-        return Single.create<User>({}).subscribeOn(Schedulers.io())
+        return Single.create<User> { emitter ->
+            var userRef = mFireDatabase.getReference("${Constant.FIREBASE_USER_REF_KEY}/$idUser")
+            userRef.addValueEventListener(object: ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    emitter.onError(p0.toException())
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    p0.getValue(User::class.java)?.apply {
+                        emitter.onSuccess(this)
+                    }
+                }
+
+            })
+        }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
@@ -200,9 +214,8 @@ class UserRemoteDatasource : UserDataSource {
                         "${Constant.FIREBASE_USER_REF_KEY}/$idUser" +
                                 "/${Constant.FIREBASE_WALLET_REF_KEY}")
                 val newKey = walletRef.push()
-                Wallet(0F, Date().toString(), walletName).apply {
+                Wallet(newKey.toString(),0F, Date().toString(), walletName).apply {
                     newKey.setValue(this)
-                    id = newKey.toString()
                     it.onNext(this)
                 }
 
@@ -235,8 +248,7 @@ class UserRemoteDatasource : UserDataSource {
                 })
 
             } catch (e: Exception) {
-                emitter
-                        .onError(e)
+                emitter.onError(e)
             }
 
         }.subscribeOn(Schedulers.io())
@@ -267,6 +279,17 @@ class UserRemoteDatasource : UserDataSource {
                         e.onError(it.exception!!)
                     }
                 }
+            }
+        }.flatMap { user ->
+            return@flatMap Single.create<User> {
+                val defaultWallet = mFireDatabase.reference.child("user").child(user.id.toString())
+                        .child(Constant.FIREBASE_WALLET_REF_KEY).push()
+
+                Wallet(defaultWallet.key.toString(),0F, Date().toString(), "Default Wallet").apply {
+                    defaultWallet.setValue(this)
+                    it.onSuccess(user)
+                }
+
             }
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

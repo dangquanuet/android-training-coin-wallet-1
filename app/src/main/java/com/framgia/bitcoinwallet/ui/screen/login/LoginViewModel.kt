@@ -27,9 +27,7 @@ class LoginViewModel(private val context: Application, private val userRepositor
                 }
                 else -> {
                     SharedPreUtils.changeLoginState(context, true)
-                    //SharedPreUtils.saveUserId(context, it.id)
-                    SharedPreUtils.saveUserId(context, "1")
-                    SharedPreUtils.saveWalletAddress(context,"1")
+                    it.id?.let { it1 -> SharedPreUtils.saveUserId(context, it1) }
                     context.startActivity(MainActivity.getMainIntent(context))
                 }
             }

@@ -268,6 +268,17 @@ class UserRemoteDatasource : UserDataSource {
                     }
                 }
             }
+        }.flatMap { user ->
+            return@flatMap Single.create<User> {
+                val defaultWallet = mFireDatabase.reference.child("user").child(user.id.toString())
+                        .child(Constant.FIREBASE_WALLET_REF_KEY).push()
+
+                Wallet(0F, Date().toString(), "Default Wallet").apply {
+                    defaultWallet.setValue(this)
+                    it.onSuccess(user)
+                }
+
+            }
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }

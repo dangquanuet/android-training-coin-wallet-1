@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.MutableLiveData
 import android.graphics.Bitmap
+import android.util.Log
 import com.framgia.bitcoinwallet.data.model.Wallet
 import com.framgia.bitcoinwallet.data.source.repository.UserRepository
 import com.google.zxing.BarcodeFormat

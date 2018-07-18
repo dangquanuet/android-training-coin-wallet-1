@@ -40,7 +40,6 @@ class SignUpActivity : BaseActivity<ActivitySingUpBinding>(), SignUpActionListen
         binding.apply {
             viewModel = this@SignUpActivity.obtainViewModel(SignUpViewModel::class.java)
             listener = this@SignUpActivity
-            setLifecycleOwner(this@SignUpActivity)
         }
     }
 

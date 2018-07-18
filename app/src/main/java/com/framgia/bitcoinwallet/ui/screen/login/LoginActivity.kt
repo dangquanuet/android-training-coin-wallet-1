@@ -33,7 +33,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginActionListener 
         binding?.apply {
             viewModel = this@LoginActivity.obtainViewModel(LoginViewModel::class.java)
             listener = this@LoginActivity
-            setLifecycleOwner(this@LoginActivity)
         }
         binding?.viewModel?.notifyMessage?.observe(this, Observer {
             it?.let { it1 -> notify(it1) }

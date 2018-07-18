@@ -39,6 +39,7 @@ dependencies {
 
     // arch
     implementation "android.arch.lifecycle:extensions:$archVersion"
+    implementation "com.android.support.constraint:constraint-layout:$constraintVersion"
     kapt "android.arch.lifecycle:compiler:$archVersion"
 
     // reactive-x

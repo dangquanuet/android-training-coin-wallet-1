@@ -61,4 +61,14 @@
     <string name="cancel_title">Cancel</string>
     <string name="wallet_name_exist_title">Wallet name is existed!</string>
     <string name="enter_wallet_name_title">Enter Your New Wallet Name</string>
+    <string name="title_register_now">Register Now</string>
+    <string name="title_already_member">Already a Member</string>
+    <string name="text_sign_in">Sign In</string>
+    <string name="text_hint_full_name">Full Name</string>
+    <string name="text_hint_confirm_password">Confirm Password</string>
+    <string name="text_hint_phone">Phone Number</string>
+    <string name="text_hint_country">Country</string>
+    <string name="title_sign_up">Sign Up</string>
+    <string name="err_pass_is_null_blank">Password cant be blank </string>
+    <string name="err_pass_not_match">Password does not match the confirm password.</string>
 </resources>

@@ -213,20 +213,28 @@ class UserRemoteDatasource : UserDataSource {
 
     }
 
-    override fun signUp(email: String, password: String): Single<User> {
+    override fun signUp(user: User?): Single<User> {
         return Single.create<User> { e ->
-            var user: User
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+            mAuth.createUserWithEmailAndPassword(user?.email.toString(), user?.password.toString()).addOnCompleteListener {
                 if (it.isSuccessful) {
                     val userFirebase = mAuth.currentUser
-                    user = User(userFirebase?.uid, userFirebase?.email)
-                    e.onSuccess(user)
+                    user?.id = userFirebase?.uid
+                    user?.let { it1 -> e.onSuccess(it1) }
                 } else {
                     e.onError(it.exception!!)
                 }
             }
-        }
-                .subscribeOn(Schedulers.io())
+        }.flatMap { user ->
+            return@flatMap Single.create<User> { e ->
+                mFireDatabase.reference.child("user").child(user.id.toString()).setValue(user).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        e.onSuccess(user)
+                    } else {
+                        e.onError(it.exception!!)
+                    }
+                }
+            }
+        }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 

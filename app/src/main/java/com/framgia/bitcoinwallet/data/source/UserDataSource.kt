@@ -7,7 +7,7 @@ import java.util.ArrayList
 
 interface UserDataSource {
     fun singIn(email: String, password: String): Single<User>
-    fun signUp(email: String, password: String): Single<User>
+    fun signUp(user: User?): Single<User>
     fun forgotPassword(email: String): Single<Boolean>
     fun getInforUser(idUser: String): Single<User>
     fun getCurrentUserId(): Single<String>

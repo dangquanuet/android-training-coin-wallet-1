@@ -27,8 +27,8 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
         return userRemoteDatasource.singIn(email, password)
     }
 
-    override fun signUp(email: String, password: String): Single<User> {
-        return userRemoteDatasource.signUp(email, password)
+    override fun signUp(user: User?): Single<User> {
+        return userRemoteDatasource.signUp(user)
     }
 
     override fun forgotPassword(email: String): Single<Boolean> {

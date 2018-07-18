@@ -13,7 +13,6 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class UserRemoteDatasource : UserDataSource {
-
     private var mAuth: FirebaseAuth
     private var mFireDatabase: FirebaseDatabase
 
@@ -35,15 +34,19 @@ class UserRemoteDatasource : UserDataSource {
 
     override fun singIn(email: String, password: String): Single<User> {
         return Single.create<User> { e ->
-            var user: User
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    var userFirebase = mAuth.currentUser
-                    user = User(userFirebase!!.uid, userFirebase.email!!)
-                    e.onSuccess(user)
+            try {
+                var user: User
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        var userFirebase = mAuth.currentUser
+                        user = User(userFirebase!!.uid, userFirebase.email!!)
+                        e.onSuccess(user)
+                    } else {
+                        e.onSuccess(User())
+                    }
                 }
-            }.addOnFailureListener {
-                e.onError(it)
+            } catch (ex: Exception) {
+                e.onError(ex)
             }
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -62,11 +65,13 @@ class UserRemoteDatasource : UserDataSource {
     }
 
     override fun getInforUser(idUser: String): Single<User> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Single.create<User>({}).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun getInforTransactionUser(idUser: String): Single<Transaction> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Single.create<Transaction>({}).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun getCurrentUserId(): Single<String> {
@@ -157,8 +162,8 @@ class UserRemoteDatasource : UserDataSource {
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun getUserWallets(idUser: String): Observable<ArrayList<Wallet>> {
-        return Observable.create<ArrayList<Wallet>> {
+    override fun getUserWallets(idUser: String): Single<MutableList<Wallet>> {
+        return Single.create<MutableList<Wallet>> {
             var walletRef = mFireDatabase.getReference(
                     "${Constant.FIREBASE_USER_REF_KEY}/$idUser" +
                             "/${Constant.FIREBASE_WALLET_REF_KEY}")
@@ -172,10 +177,10 @@ class UserRemoteDatasource : UserDataSource {
                                     id = wallet.key.toString()
                                 })
                             }
-                            it.onNext(walletRes)
+                            it.onSuccess(walletRes)
                         }
 
-                        else -> it.onNext(ArrayList())
+                        else -> it.onSuccess(ArrayList())
                     }
                 }
 
@@ -203,6 +208,35 @@ class UserRemoteDatasource : UserDataSource {
 
             } catch (e: Exception) {
                 it.onError(e)
+            }
+
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getWalletInfor(idUser: String, idWallet: String): Observable<Wallet> {
+        return Observable.create<Wallet> { emitter ->
+            try {
+                var walletRef = mFireDatabase.getReference(
+                        "${Constant.FIREBASE_USER_REF_KEY}/$idUser" +
+                                "/${Constant.FIREBASE_WALLET_REF_KEY}/$idWallet")
+                walletRef.addValueEventListener(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                        emitter.onError(error.toException())
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        p0.getValue(Wallet::class.java)?.apply {
+                            id = p0.key.toString()
+                            emitter.onNext(this)
+                        }
+                    }
+
+                })
+
+            } catch (e: Exception) {
+                emitter
+                        .onError(e)
             }
 
         }.subscribeOn(Schedulers.io())

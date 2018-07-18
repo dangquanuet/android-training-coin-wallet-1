@@ -36,11 +36,11 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
     }
 
     override fun getInforUser(idUser: String): Single<User> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return userRemoteDatasource.getInforUser(idUser)
     }
 
     override fun getInforTransactionUser(idUser: String): Single<Transaction> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+     return userRemoteDatasource.getInforTransactionUser(idUser)
     }
 
     override fun getCurrentUserId(): Single<String> {
@@ -61,12 +61,16 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
                 , senderStringRef, currentBalance)
     }
 
-    override fun getUserWallets(idUser: String): Observable<ArrayList<Wallet>> {
+    override fun getUserWallets(idUser: String): Single<MutableList<Wallet>> {
         return userRemoteDatasource.getUserWallets(idUser)
     }
 
     override fun addWallet(idUser: String, walletName: String): Observable<Wallet> {
         return userRemoteDatasource.addWallet(idUser, walletName)
+    }
+
+    override fun getWalletInfor(idUser: String, idWallet: String): Observable<Wallet> {
+        return userRemoteDatasource.getWalletInfor(idUser, idWallet)
     }
 
     override fun updateUserTransaction(stringRef: String) {

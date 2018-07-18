@@ -13,6 +13,7 @@ import com.framgia.bitcoinwallet.util.obtainViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginActionListener {
+
     override fun onClickSignUp(view: View) {
         startActivity(SignUpActivity.getSignUpIntent(this))
     }
@@ -21,7 +22,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginActionListener 
         binding.viewModel?.email?.value = edt_email.getText().toString()
         binding.viewModel?.password?.value = edt_password.getText().toString()
 
-        binding?.viewModel?.clickSignIn()
+        binding.viewModel?.clickSignIn()
     }
 
     override fun navigateLayout(): Boolean = false
@@ -29,17 +30,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginActionListener 
     override fun getLayoutRes(): Int = R.layout.activity_login
 
     override fun initComponents() {
-//        binding.viewModel = this@LoginActivity.obtainViewModel(LoginViewModel::class.java)
-        binding?.apply {
+        binding.apply {
             viewModel = this@LoginActivity.obtainViewModel(LoginViewModel::class.java)
             listener = this@LoginActivity
         }
-        binding?.viewModel?.notifyMessage?.observe(this, Observer {
-            it?.let { it1 -> notify(it1) }
-        })
-    }
-
-    override fun setEvents() {
     }
 
     override fun observeViewModel() {
@@ -50,6 +44,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginActionListener 
 
     private fun notify(mess: String) {
         Toast.makeText(this, mess, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun setEvents() {
     }
 
     companion object {

@@ -33,10 +33,9 @@ object SharedPreUtils {
     }
 
     fun getUserId(context: Context): String {
-        /*var sharedPref: SharedPreferences =
+        var sharedPref: SharedPreferences =
                 context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE)
-        return sharedPref?.getString(Constant.PREF_USER_ID_KEY, null)*/
-        return "1"
+        return sharedPref?.getString(Constant.PREF_USER_ID_KEY, "")
     }
 
     fun saveWalletAddress(context: Context, address: String) {
@@ -50,9 +49,8 @@ object SharedPreUtils {
     }
 
     fun getCurrentWalletAddress(context: Context): String {
-        /*var sharedPref: SharedPreferences =
+        var sharedPref: SharedPreferences =
                 context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE)
-        return sharedPref?.getString(Constant.PREF_WALLET_ADDRESS_KEY, null)*/
-        return "erys346sdjh25346xzdh"
+        return sharedPref?.getString(Constant.PREF_WALLET_ADDRESS_KEY, "")
     }
 }

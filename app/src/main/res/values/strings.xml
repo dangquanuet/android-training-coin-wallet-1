@@ -71,4 +71,7 @@
     <string name="title_sign_up">Sign Up</string>
     <string name="err_pass_is_null_blank">Password cant be blank </string>
     <string name="err_pass_not_match">Password does not match the confirm password.</string>
+    <string name="login_failed_title">Email or password incorrect!</string>
+    <string name="action_change_wallet">Change wallet</string>
+    <string name="action_share_wallet">Share wallet</string>
 </resources>

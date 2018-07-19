@@ -1,25 +1,32 @@
 package com.framgia.bitcoinwallet.ui.screen.main
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.databinding.ActivityMainBinding
 import com.framgia.bitcoinwallet.ui.BaseActivity
+import com.framgia.bitcoinwallet.ui.screen.login.LoginActivity
 import com.framgia.bitcoinwallet.ui.screen.main.receivecointab.ReceiveFragment
 import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinFragment
 import com.framgia.bitcoinwallet.ui.screen.wallet.WalletActivity
+import com.framgia.bitcoinwallet.util.SharedPreUtils
 import com.framgia.bitcoinwallet.util.obtainViewModel
 import com.framgia.bitcoinwallet.util.setUpActionBar
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.header_drawer.view.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -27,7 +34,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var navigationView: NavigationView
     private lateinit var toolBar: Toolbar
     private lateinit var drawerToggle: ActionBarDrawerToggle
-    private lateinit var mainViewModel: MainViewModel
+
+    override fun onResume() {
+        super.onResume()
+        when (pager_main.currentItem) {
+            TAB_TRANSACTION_POSITION -> navigationView.setCheckedItem(R.id.action_transaction)
+            TAB_SEND_POSITION -> navigationView.setCheckedItem(R.id.action_send)
+            TAB_RECEIVE_POSITION -> navigationView.setCheckedItem(R.id.action_receive)
+        }
+    }
 
     override fun navigateLayout(): Boolean {
         return false
@@ -40,8 +55,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initComponents() {
         setUpToolbar()
         setUpNavigationDrawer()
-        setUpViewPager()
         initMainViewModel()
+
+        when (SharedPreUtils.getCurrentWalletAddress(this)) {
+            EMPTY_STRING -> {
+                binding.viewModel?.getDefaultWallet()
+            }
+            else -> {
+                binding.viewModel?.dataLoading?.value = false
+            }
+        }
     }
 
     override fun setEvents() {
@@ -52,6 +75,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 R.id.action_transaction -> pager_main.currentItem = TAB_TRANSACTION_POSITION
                 R.id.action_send -> pager_main.currentItem = TAB_SEND_POSITION
                 R.id.action_bitcoin_wallet -> startWalletActivity()
+                R.id.action_log_out -> logOut()
             }
             item.isChecked = true
             drawerLayout.closeDrawers()
@@ -79,7 +103,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun observeViewModel() {
+        binding.viewModel?.dataLoading?.observe(this, Observer {
+            when (it) {
+                false -> setUpViewPager()
+            }
+        })
 
+        binding.viewModel?.user?.observe(this, Observer {
+            when (it) {
+                null -> {}
+                else -> { it?.let {
+                    drawerLayout.text_email.text = it.email
+                    drawerLayout.text_name.text = it.fullName
+                }}
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -99,7 +137,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         result?.contents?.let {
-            mainViewModel.addressCoinScanned.value = it
+            binding.viewModel?.addressCoinScanned?.value = it
         }
     }
 
@@ -147,15 +185,32 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun initMainViewModel() {
-        mainViewModel = obtainViewModel(MainViewModel::class.java)
+        binding.viewModel = obtainViewModel(MainViewModel::class.java).apply {
+            lifecycle.addObserver(this)
+            dataLoading.value = true
+        }
     }
 
     private fun startWalletActivity() {
         startActivity(WalletActivity.getWalletActivityIntent(this))
     }
 
-    companion object {
+    private fun startLoginActivity() {
+        startActivity(LoginActivity.getLoginIntent(this))
+    }
 
+    private fun logOut() {
+        if (SharedPreUtils.getLoginState(this)) {
+            SharedPreUtils.changeLoginState(this, false)
+            SharedPreUtils.saveUserId(this, EMPTY_STRING)
+            SharedPreUtils.saveWalletAddress(this, EMPTY_STRING)
+            startLoginActivity()
+            finish()
+        }
+    }
+
+    companion object {
+        private const val EMPTY_STRING = ""
         fun getMainIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
         private const val TAB_OFF_SCREEN_AMOUNT = 3
         private const val TAB_RECEIVE_POSITION = 0

@@ -5,4 +5,5 @@ import android.view.View
 interface LoginActionListener {
     fun onClickLogin(view: View)
     fun onClickSignUp(view: View)
+    fun onClickForgot(view: View)
 }

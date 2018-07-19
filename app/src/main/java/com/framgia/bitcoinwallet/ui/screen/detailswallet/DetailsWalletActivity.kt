@@ -46,7 +46,7 @@ class DetailsWalletActivity : BaseActivity<ActivityDetailsWalletBinding>() {
     }
 
     private fun getIntentData() {
-        currentWallet = intent.getSerializableExtra(EXTRA_WALLET) as Wallet
+        currentWallet = intent.getParcelableExtra(EXTRA_WALLET)
     }
 
     private fun initViewModel() {

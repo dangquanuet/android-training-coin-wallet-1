@@ -13,7 +13,7 @@ class WalletAdapter(var wallets: MutableList<Wallet>,
     : BaseRecyclerView<WalletAdapter.WalletHolder, ItemWalletBinding, Wallet>(wallets) {
 
     private var previousChoosed: Int = -1
-    private var isShowCheckUi: Boolean = false
+    private var ishowCheckUi: Boolean = false
 
     override fun getViewHolder(parent: ViewGroup, viewType: Int): WalletHolder {
         return WalletHolder(ItemWalletBinding.inflate(LayoutInflater.from(parent.context)
@@ -25,7 +25,12 @@ class WalletAdapter(var wallets: MutableList<Wallet>,
         override fun bindData(item: Wallet) {
             binding.apply {
                 viewModel = ItemWalletViewModel(item)
-                viewModel?.isShowCheckUi?.value = isShowCheckUi
+                viewModel?.isShowCheckUi?.value = ishowCheckUi
+
+                if (previousChoosed != -1 && adapterPosition == previousChoosed) {
+                    item.isChoosed = false
+                }
+
                 executePendingBindings()
                 root.setOnClickListener {
                     listener.onItemClick(adapterPosition, item)
@@ -34,11 +39,7 @@ class WalletAdapter(var wallets: MutableList<Wallet>,
                     item.isChoosed = checkboxItemWallet.isChecked
                     listener.onItemClick(adapterPosition, item)
                 }
-                if (previousChoosed != -1 && adapterPosition == previousChoosed) {
-                    item.isChoosed = false
-                }
             }
-
         }
     }
 
@@ -56,18 +57,15 @@ class WalletAdapter(var wallets: MutableList<Wallet>,
     }
 
     fun showCheckBoxChoose(isShow: Boolean) {
-        isShowCheckUi = isShow
+        ishowCheckUi = isShow
         notifyDataSetChanged()
     }
 
     fun updateData(newWallets: MutableList<Wallet>) {
-        var x = mutableListOf<Wallet>()
-        x.addAll(newWallets)
         wallets.apply {
             clear()
-            addAll(x)
+            addAll(newWallets)
         }
-        isShowCheckUi = false
-        notifyDataSetChanged()
+        showCheckBoxChoose(false)
     }
 }

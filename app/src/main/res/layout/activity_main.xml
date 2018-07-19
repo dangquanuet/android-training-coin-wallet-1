@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
     <data>
-
         <variable
             name="viewModel"
             type="com.framgia.bitcoinwallet.ui.screen.main.MainViewModel" />
-
         <import type="android.view.View" />
     </data>
 

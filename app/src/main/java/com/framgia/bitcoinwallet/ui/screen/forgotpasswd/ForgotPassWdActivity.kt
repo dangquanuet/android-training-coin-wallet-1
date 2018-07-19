@@ -1,5 +1,7 @@
 package com.framgia.bitcoinwallet.ui.screen.forgotpasswd
 
+import android.content.Context
+import android.content.Intent
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.ui.BaseActivity
 import android.os.Build
@@ -81,5 +83,10 @@ class ForgotPassWdActivity : BaseActivity<ActivityForgotPasswdBinding>(), Forgot
 
     private fun notify(information: String) {
         Toast.makeText(this, information, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        fun getForgotPassWdIntent(context: Context)
+                = Intent(context, ForgotPassWdActivity::class.java)
     }
 }

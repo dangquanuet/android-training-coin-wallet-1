@@ -3,13 +3,14 @@ package com.framgia.bitcoinwallet.util
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceViewModel
 
 object SharedPreUtils {
 
     fun getLoginState(context: Context): Boolean {
         var sharedPref: SharedPreferences =
                 context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE)
-        return sharedPref?.getBoolean(Constant.PREF_LOGIN_STATE_KEY, false)
+        return sharedPref.getBoolean(Constant.PREF_LOGIN_STATE_KEY, false)
     }
 
     fun changeLoginState(context: Context, state: Boolean) {
@@ -52,5 +53,21 @@ object SharedPreUtils {
         var sharedPref: SharedPreferences =
                 context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE)
         return sharedPref.getString(Constant.PREF_WALLET_ADDRESS_KEY, "")
+    }
+
+    fun saveCoinTypeChoosed(context: Context, type: String) {
+        var editor: SharedPreferences.Editor =
+                context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE).edit()
+
+        with(editor) {
+            putString(Constant.PREF_COIN_TYPE_KEY, type)
+            commit()
+        }
+    }
+
+    fun getCoinTypeChoosed(context: Context): String {
+        var sharedPref: SharedPreferences =
+                context.getSharedPreferences(Constant.PREF_AUTHENCIATION, MODE_PRIVATE)
+        return sharedPref.getString(Constant.PREF_COIN_TYPE_KEY, CoinPriceViewModel.USD_TYPE)
     }
 }

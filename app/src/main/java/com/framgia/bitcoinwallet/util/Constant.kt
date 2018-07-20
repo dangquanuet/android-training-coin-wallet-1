@@ -7,6 +7,7 @@ object Constant {
     const val EX_USER = "EXTRA_USER"
     const val PREF_USER_ID_KEY: String = "PREF_USER_ID_KEY"
     const val PREF_WALLET_ADDRESS_KEY: String = "PREF_WALLET_ADDRESS_KEY"
+    const val PREF_COIN_TYPE_KEY: String = "PREF_COIN_TYPE_KEY"
 
     const val FIREBASE_USER_REF_KEY = "user"
     const val FIREBASE_TRANSACTION_REF_KEY = "transaction"

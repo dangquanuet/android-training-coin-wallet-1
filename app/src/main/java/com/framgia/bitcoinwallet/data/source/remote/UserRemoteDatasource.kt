@@ -12,6 +12,7 @@ import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceViewModel.Companio
 import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceViewModel.Companion.USD_TYPE
 import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceViewModel.Companion.VND_TYPE
 import com.framgia.bitcoinwallet.util.Constant
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import io.reactivex.Observable
@@ -296,7 +297,7 @@ class UserRemoteDatasource : UserDataSource {
                 val defaultWallet = mFireDatabase.reference.child("user").child(user.id.toString())
                         .child(Constant.FIREBASE_WALLET_REF_KEY).push()
 
-                Wallet(defaultWallet.key.toString(), 0F, Date().toString(), "Default Wallet").apply {
+                Wallet(defaultWallet.key.toString(), 50F, Date().toString(), "Default Wallet").apply {
                     defaultWallet.setValue(this)
                     it.onSuccess(user)
                 }
@@ -379,5 +380,31 @@ class UserRemoteDatasource : UserDataSource {
         }
 
         return bitcoins
+    }
+
+    override fun changePassWord(newPassWd: String): Single<String> {
+        return Single.create<String> { emitter ->
+            mAuth.currentUser?.updatePassword(newPassWd)
+                    ?.addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            emitter.onSuccess(newPassWd)
+                        } else {
+                            emitter.onSuccess("")
+                        }
+                    }
+        }
+    }
+
+    override fun reAuth(authCredential: AuthCredential): Single<Boolean> {
+        return Single.create<Boolean> { emitter ->
+            mAuth.currentUser?.reauthenticate(authCredential)
+                    ?.addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            emitter.onSuccess(true)
+                        } else {
+                            emitter.onSuccess(false)
+                        }
+                    }
+        }
     }
 }

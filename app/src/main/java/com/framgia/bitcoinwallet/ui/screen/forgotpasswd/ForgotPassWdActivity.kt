@@ -8,6 +8,7 @@ import android.os.Build
 import android.view.WindowManager
 import android.widget.Toast
 import com.framgia.bitcoinwallet.databinding.ActivityForgotPasswdBinding
+import com.framgia.bitcoinwallet.ui.screen.login.LoginActivity
 import com.framgia.bitcoinwallet.util.obtainViewModel
 import kotlinx.android.synthetic.main.activity_forgot_passwd.*
 
@@ -52,7 +53,7 @@ class ForgotPassWdActivity : BaseActivity<ActivityForgotPasswdBinding>(), Forgot
     }
 
     override fun startLogin() {
-
+        startActivity(LoginActivity.getLoginIntent(this))
     }
 
     private fun sendMail() {

@@ -7,6 +7,8 @@ import com.framgia.bitcoinwallet.data.source.local.UserLocalDatasource
 import com.framgia.bitcoinwallet.data.source.remote.UserRemoteDatasource
 import com.framgia.bitcoinwallet.data.source.repository.BitCoinRepository
 import com.framgia.bitcoinwallet.data.source.repository.UserRepository
+import com.framgia.bitcoinwallet.ui.screen.changepassws.ChangePassWdActivity
+import com.framgia.bitcoinwallet.ui.screen.changepassws.ChangePassWdViewModel
 import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceViewModel
 import com.framgia.bitcoinwallet.ui.screen.detailswallet.DetailsWalletViewModel
 import com.framgia.bitcoinwallet.ui.screen.forgotpasswd.ForgotPassWdViewModel
@@ -58,6 +60,9 @@ class ViewModelFactory private constructor(
 
                     isAssignableFrom(CoinPriceViewModel::class.java) ->
                         CoinPriceViewModel(application, userRepository)
+
+                    isAssignableFrom(ChangePassWdViewModel::class.java) ->
+                        ChangePassWdViewModel(application, userRepository)
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
                 }

@@ -32,7 +32,7 @@
     <string name="amount_title">Amount</string>
     <string name="note_title">Note</string>
     <string name="send_instruct_title">If you want to send some money, Please fill up the followings:</string>
-    <string name="available_balance__title">Available balance</string>
+    <string name="available_balance__title">Current balance</string>
     <string name="title_sign_in_now">Sign In Now </string>
     <string name="title_intro_login">Embarrassing hidden in the middle of text .All the
         lorem ipsum generator on the internet tend to
@@ -74,4 +74,7 @@
     <string name="login_failed_title">Email or password incorrect!</string>
     <string name="action_change_wallet">Change wallet</string>
     <string name="action_share_wallet">Share wallet</string>
+    <string name="btc_reward_title">BTC Reward</string>
+    <string name="crypto_prices_title">Crypto Prices</string>
+    <string name="crypto_charts_title">Crypto Charts</string>
 </resources>

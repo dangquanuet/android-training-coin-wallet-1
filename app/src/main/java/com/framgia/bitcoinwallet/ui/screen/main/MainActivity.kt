@@ -17,9 +17,11 @@ import android.widget.Toast
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.databinding.ActivityMainBinding
 import com.framgia.bitcoinwallet.ui.BaseActivity
+import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceActivity
 import com.framgia.bitcoinwallet.ui.screen.login.LoginActivity
 import com.framgia.bitcoinwallet.ui.screen.main.receivecointab.ReceiveFragment
 import com.framgia.bitcoinwallet.ui.screen.main.sendcointab.SendCoinFragment
+import com.framgia.bitcoinwallet.ui.screen.main.transactiontab.TransactionFragment
 import com.framgia.bitcoinwallet.ui.screen.wallet.WalletActivity
 import com.framgia.bitcoinwallet.util.SharedPreUtils
 import com.framgia.bitcoinwallet.util.obtainViewModel
@@ -28,7 +30,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_drawer.view.*
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -111,11 +113,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.viewModel?.user?.observe(this, Observer {
             when (it) {
-                null -> {}
-                else -> { it?.let {
-                    drawerLayout.text_email.text = it.email
-                    drawerLayout.text_name.text = it.fullName
-                }}
+                null -> {
+                }
+                else -> {
+                    it?.let {
+                        drawerLayout.text_email.text = it.email
+                        drawerLayout.text_name.text = it.fullName
+                    }
+                }
             }
         })
     }
@@ -127,8 +132,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_pr_code ->
+            R.id.action_coin_chart -> {
+                startCoinChartActivity()
                 return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -139,6 +146,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         result?.contents?.let {
             binding.viewModel?.addressCoinScanned?.value = it
         }
+    }
+
+    override fun startWalletActivity() {
+        startActivity(WalletActivity.getWalletActivityIntent(this))
+    }
+
+    override fun startLoginActivity() {
+        startActivity(LoginActivity.getLoginIntent(this))
+    }
+
+    override fun startCoinChartActivity() {
+        startActivity(CoinPriceActivity.getCoinPriceWallet(this))
     }
 
     private fun setUpViewPager() {
@@ -155,7 +174,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
      */
     private fun createTabFragment(): HashMap<String, Fragment> {
         return HashMap<String, Fragment>().apply {
-            put(getString(R.string.title_transaction), Fragment())
+            put(getString(R.string.title_transaction), TransactionFragment.newInstance())
             put(getString(R.string.title_receive), ReceiveFragment.newInstance())
             put(getString(R.string.title_send), SendCoinFragment.newInstance())
         }
@@ -189,14 +208,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             lifecycle.addObserver(this)
             dataLoading.value = true
         }
-    }
-
-    private fun startWalletActivity() {
-        startActivity(WalletActivity.getWalletActivityIntent(this))
-    }
-
-    private fun startLoginActivity() {
-        startActivity(LoginActivity.getLoginIntent(this))
     }
 
     private fun logOut() {

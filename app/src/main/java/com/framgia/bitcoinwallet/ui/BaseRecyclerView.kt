@@ -4,7 +4,7 @@ import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 
-abstract class BaseRecyclerView <ViewHoler :
+abstract class BaseRecyclerView<ViewHoler :
 BaseRecyclerViewHolder<View, Item>, View : ViewDataBinding, Item : Any>
 (val items: List<Item>)
     : RecyclerView.Adapter<BaseRecyclerViewHolder<View, Item>>() {
@@ -18,5 +18,5 @@ BaseRecyclerViewHolder<View, Item>, View : ViewDataBinding, Item : Any>
         holder.bindData(items[position])
     }
 
-    abstract fun getViewHolder(parent: ViewGroup, viewType: Int) : ViewHoler
+    abstract fun getViewHolder(parent: ViewGroup, viewType: Int): ViewHoler
 }

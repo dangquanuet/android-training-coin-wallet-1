@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.framgia.bitcoinwallet.ui.screen.changepassws.ChangePassWdViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_change_passwd"
+            android:layout_width="0dp"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/color_deep_purple_50_500"
+            android:elevation="@dimen/dp_4"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@string/change_passwd_title"
+            app:titleTextColor="@android:color/white" />
+
+        <EditText
+            android:id="@+id/edit_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@drawable/shape_edit_text"
+            android:drawableRight="@drawable/ic_message"
+            android:hint="@string/email_title"
+            android:inputType="textEmailAddress"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_10"
+            app:layout_constraintBottom_toTopOf="@+id/edit_passwd" />
+
+        <EditText
+            android:id="@+id/edit_passwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@drawable/shape_edit_text"
+            android:drawableRight="@drawable/ic_key"
+            android:hint="@string/text_hint_password"
+            android:inputType="textPassword"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_change_passwd" />
+
+        <EditText
+            android:id="@+id/edit_new_passwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@drawable/shape_edit_text"
+            android:drawableRight="@drawable/ic_key"
+            android:hint="@string/password_new_title"
+            android:inputType="textPassword"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/edit_passwd" />
+
+        <Button
+            android:id="@+id/button_change_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@color/color_deep_purple_50_500"
+            android:text="@string/action_confirm"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_passwd" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

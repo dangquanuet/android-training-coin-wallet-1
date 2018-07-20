@@ -39,11 +39,19 @@
         </menu>
     </item>
 
-    <group android:checkableBehavior="single">
+    <item android:title="@string/account_title">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/action_account"
+                    android:icon="@drawable/ic_user"
+                    android:title="@string/change_passwd_title" />
 
-        <item
-            android:id="@+id/action_log_out"
-            android:icon="@drawable/ic_log_out"
-            android:title="@string/title_log_out" />
-    </group>
+                <item
+                    android:id="@+id/action_log_out"
+                    android:icon="@drawable/ic_log_out"
+                    android:title="@string/title_log_out" />
+            </group>
+        </menu>
+    </item>
 </menu>

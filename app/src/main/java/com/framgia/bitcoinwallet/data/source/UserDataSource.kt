@@ -2,6 +2,7 @@ package com.framgia.bitcoinwallet.data.source
 
 import com.framgia.bitcoinwallet.data.model.*
 import com.framgia.bitcoinwallet.data.network.message.CryptoResponse
+import com.google.firebase.auth.AuthCredential
 import io.reactivex.Observable
 import io.reactivex.Single
 import java.util.ArrayList
@@ -23,6 +24,8 @@ interface UserDataSource {
     fun addWallet(idUser: String, walletName: String): Observable<Wallet>
     fun getWalletInfor(idUser: String, idWallet: String): Observable<Wallet>
     fun getCryptoPrice(fsyms: String, tsyms: String): Observable<MutableList<BitCoin>>
+    fun changePassWord(newPassWd: String): Single<String>
+    fun reAuth(authCredential: AuthCredential): Single<Boolean>
     interface local {
         fun saveUser(user: User)
         fun updateUser(user: User)

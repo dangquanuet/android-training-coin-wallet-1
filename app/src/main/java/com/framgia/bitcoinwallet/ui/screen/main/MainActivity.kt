@@ -17,6 +17,7 @@ import android.widget.Toast
 import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.databinding.ActivityMainBinding
 import com.framgia.bitcoinwallet.ui.BaseActivity
+import com.framgia.bitcoinwallet.ui.screen.changepassws.ChangePassWdActivity
 import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceActivity
 import com.framgia.bitcoinwallet.ui.screen.login.LoginActivity
 import com.framgia.bitcoinwallet.ui.screen.main.receivecointab.ReceiveFragment
@@ -78,6 +79,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
                 R.id.action_send -> pager_main.currentItem = TAB_SEND_POSITION
                 R.id.action_bitcoin_wallet -> startWalletActivity()
                 R.id.action_log_out -> logOut()
+                R.id.action_account -> startChangePassWdActivity()
             }
             item.isChecked = true
             drawerLayout.closeDrawers()
@@ -158,6 +160,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
 
     override fun startCoinChartActivity() {
         startActivity(CoinPriceActivity.getCoinPriceWallet(this))
+    }
+
+    override fun startChangePassWdActivity() {
+        startActivity(ChangePassWdActivity.getChangePassWdIntent(this))
     }
 
     private fun setUpViewPager() {

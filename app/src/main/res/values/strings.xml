@@ -77,4 +77,10 @@
     <string name="btc_reward_title">BTC Reward</string>
     <string name="crypto_prices_title">Crypto Prices</string>
     <string name="crypto_charts_title">Crypto Charts</string>
+    <string name="account_title">Account</string>
+    <string name="change_passwd_title">Change PassWord</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="change_passwd_successed">Change password successed</string>
+    <string name="change_passwd_failed">Change password failed</string>
+    <string name="invalid_email_passwd">Email or password incorrect</string>
 </resources>

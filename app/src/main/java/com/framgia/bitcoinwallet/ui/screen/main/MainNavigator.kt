@@ -7,4 +7,6 @@ interface MainNavigator {
     fun startLoginActivity()
 
     fun startCoinChartActivity()
+
+    fun startChangePassWdActivity()
 }

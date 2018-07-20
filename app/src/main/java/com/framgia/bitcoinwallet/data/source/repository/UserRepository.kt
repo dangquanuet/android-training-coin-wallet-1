@@ -5,6 +5,7 @@ import com.framgia.bitcoinwallet.data.network.message.CryptoResponse
 import com.framgia.bitcoinwallet.data.source.UserDataSource
 import com.framgia.bitcoinwallet.data.source.local.UserLocalDatasource
 import com.framgia.bitcoinwallet.data.source.remote.UserRemoteDatasource
+import com.google.firebase.auth.AuthCredential
 import io.reactivex.Observable
 import io.reactivex.Single
 import java.util.ArrayList
@@ -80,5 +81,13 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
 
     override fun getCryptoPrice(fsyms: String, tsyms: String): Observable<MutableList<BitCoin>> {
         return userRemoteDatasource.getCryptoPrice(fsyms, tsyms)
+    }
+
+    override fun changePassWord(newPassWd: String): Single<String> {
+        return userRemoteDatasource.changePassWord(newPassWd)
+    }
+
+    override fun reAuth(authCredential: AuthCredential): Single<Boolean> {
+        return userRemoteDatasource.reAuth(authCredential)
     }
 }

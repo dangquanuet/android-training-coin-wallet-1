@@ -25,6 +25,7 @@
         <activity android:name=".ui.screen.wallet.WalletActivity" />
         <activity android:name=".ui.screen.detailswallet.DetailsWalletActivity"/>
         <activity android:name=".ui.screen.coinprice.CoinPriceActivity"/>
+        <activity android:name=".ui.screen.changepassws.ChangePassWdActivity"/>
     </application>
 
 </manifest>

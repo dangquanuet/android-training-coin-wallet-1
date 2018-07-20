@@ -78,5 +78,14 @@ dependencies {
 
     //gson
     implementation "com.google.code.gson:gson:$gsonVersion"
+
+    //MP Chart
+    implementation "com.github.PhilJay:MPAndroidChart:$mpchartVersion"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-scalars:$scalarsConverter"
 }
 apply plugin: 'com.google.gms.google-services'

@@ -113,11 +113,10 @@ class WalletActivity : BaseActivity<ActivityWalletBinding>(),
     private fun changeWallet() {
         isChangeClick = false
         binding.viewModel?.isChangeWalletClick?.value = false
+        walletAdapter?.showCheckBoxChoose(false)
         if (currentWalletChoosed != -1 && isAllowChange) {
             binding.viewModel?.changeWallet(currentWalletChoosed)
             currentWalletChoosed = -1
-        } else {
-            walletAdapter?.showCheckBoxChoose(false)
         }
     }
 

@@ -5,4 +5,4 @@ package com.framgia.bitcoinwallet.data.model
  * By: Sang
  * Description:
  */
-data class BitCoin(private val id: String)
+data class BitCoin(val id: String, var image: Int, var name: String, var price: String)

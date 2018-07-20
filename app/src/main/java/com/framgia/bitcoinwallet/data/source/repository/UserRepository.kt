@@ -1,6 +1,7 @@
 package com.framgia.bitcoinwallet.data.source.repository
 
 import com.framgia.bitcoinwallet.data.model.*
+import com.framgia.bitcoinwallet.data.network.message.CryptoResponse
 import com.framgia.bitcoinwallet.data.source.UserDataSource
 import com.framgia.bitcoinwallet.data.source.local.UserLocalDatasource
 import com.framgia.bitcoinwallet.data.source.remote.UserRemoteDatasource
@@ -40,7 +41,7 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
     }
 
     override fun getInforTransactionUser(idUser: String): Single<Transaction> {
-     return userRemoteDatasource.getInforTransactionUser(idUser)
+        return userRemoteDatasource.getInforTransactionUser(idUser)
     }
 
     override fun getCurrentUserId(): Single<String> {
@@ -75,5 +76,9 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
 
     override fun updateUserTransaction(stringRef: String) {
 
+    }
+
+    override fun getCryptoPrice(fsyms: String, tsyms: String): Observable<MutableList<BitCoin>> {
+        return userRemoteDatasource.getCryptoPrice(fsyms, tsyms)
     }
 }

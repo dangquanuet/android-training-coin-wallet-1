@@ -1,8 +1,16 @@
 package com.framgia.bitcoinwallet.data.source.remote
 
+import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.data.model.*
 import com.framgia.bitcoinwallet.data.model.Transaction
+import com.framgia.bitcoinwallet.data.network.api.BitcoinApi
+import com.framgia.bitcoinwallet.data.network.message.CryptoResponse
+import com.framgia.bitcoinwallet.data.network.service.BitcoinService
 import com.framgia.bitcoinwallet.data.source.UserDataSource
+import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceViewModel.Companion.EUR_TYPE
+import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceViewModel.Companion.JPY_TYPE
+import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceViewModel.Companion.USD_TYPE
+import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinPriceViewModel.Companion.VND_TYPE
 import com.framgia.bitcoinwallet.util.Constant
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -13,12 +21,15 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class UserRemoteDatasource : UserDataSource {
+
     private var mAuth: FirebaseAuth
     private var mFireDatabase: FirebaseDatabase
+    private var bitcoinApi: BitcoinApi
 
     private constructor(auth: FirebaseAuth, dataBase: FirebaseDatabase) {
         mAuth = auth
         mFireDatabase = dataBase
+        bitcoinApi = BitcoinService.getBitcoinApiInstance()
     }
 
     companion object {
@@ -67,7 +78,7 @@ class UserRemoteDatasource : UserDataSource {
     override fun getInforUser(idUser: String): Single<User> {
         return Single.create<User> { emitter ->
             var userRef = mFireDatabase.getReference("${Constant.FIREBASE_USER_REF_KEY}/$idUser")
-            userRef.addValueEventListener(object: ValueEventListener{
+            userRef.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     emitter.onError(p0.toException())
                 }
@@ -214,7 +225,7 @@ class UserRemoteDatasource : UserDataSource {
                         "${Constant.FIREBASE_USER_REF_KEY}/$idUser" +
                                 "/${Constant.FIREBASE_WALLET_REF_KEY}")
                 val newKey = walletRef.push()
-                Wallet(newKey.toString(),0F, Date().toString(), walletName).apply {
+                Wallet(newKey.toString(), 0F, Date().toString(), walletName).apply {
                     newKey.setValue(this)
                     it.onNext(this)
                 }
@@ -285,7 +296,7 @@ class UserRemoteDatasource : UserDataSource {
                 val defaultWallet = mFireDatabase.reference.child("user").child(user.id.toString())
                         .child(Constant.FIREBASE_WALLET_REF_KEY).push()
 
-                Wallet(defaultWallet.key.toString(),0F, Date().toString(), "Default Wallet").apply {
+                Wallet(defaultWallet.key.toString(), 0F, Date().toString(), "Default Wallet").apply {
                     defaultWallet.setValue(this)
                     it.onSuccess(user)
                 }
@@ -295,4 +306,78 @@ class UserRemoteDatasource : UserDataSource {
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
+    override fun getCryptoPrice(fsyms: String, tsyms: String): Observable<MutableList<BitCoin>> {
+        return bitcoinApi.getCryptoPrices(fsyms, tsyms)
+                .flatMap { crypto ->
+                    return@flatMap Observable.create<MutableList<BitCoin>> { emitter ->
+                        emitter.onNext(getBitcoinPrices(crypto, tsyms))
+                    }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun getBitcoinPrices(crypto: CryptoResponse, tsyms: String): MutableList<BitCoin> {
+        var bitcoins: MutableList<BitCoin> = mutableListOf()
+        when (tsyms) {
+            USD_TYPE -> {
+                bitcoins.apply {
+                    add(BitCoin("", R.drawable.ic_bch, "BCH", "$ " + crypto.bCH.uSD))
+                    add(BitCoin("", R.drawable.ic_btc, "BTC", "$ " + crypto.bTC.uSD.toString()))
+                    add(BitCoin("", R.drawable.ic_dash, "DASH", "$ " + crypto.dASH.uSD.toString()))
+                    add(BitCoin("", R.drawable.ic_etc, "ETC", "$ " + crypto.eTC.uSD.toString()))
+                    add(BitCoin("", R.drawable.ic_etn, "ETN", "$ " + crypto.eTN.uSD.toString()))
+                    add(BitCoin("", R.drawable.ic_ltc, "LTC", "$ " + crypto.lTC.uSD.toString()))
+                    add(BitCoin("", R.drawable.ic_xmr, "XMR", "$ " + crypto.xMR.uSD.toString()))
+                    add(BitCoin("", R.drawable.ic_xrp, "XRP", "$ " + crypto.xRP.uSD.toString()))
+                    add(BitCoin("", R.drawable.ic_zec, "ZEC", "$ " + crypto.zEC.uSD.toString()))
+                    add(BitCoin("", R.drawable.ic_eth, "ETH", "$ " + crypto.eTH.uSD.toString()))
+                }
+            }
+            VND_TYPE -> {
+                bitcoins.apply {
+                    add(BitCoin("", R.drawable.ic_bch, "BCH", "VND " + crypto.bCH.vND))
+                    add(BitCoin("", R.drawable.ic_btc, "BTC", "VND " + crypto.bTC.vND.toString()))
+                    add(BitCoin("", R.drawable.ic_dash, "DASH", "VND " + crypto.dASH.vND.toString()))
+                    add(BitCoin("", R.drawable.ic_etc, "ETC", "VND " + crypto.eTC.vND.toString()))
+                    add(BitCoin("", R.drawable.ic_etn, "ETN", "VND " + crypto.eTN.vND.toString()))
+                    add(BitCoin("", R.drawable.ic_ltc, "LTC", "VND " + crypto.lTC.vND.toString()))
+                    add(BitCoin("", R.drawable.ic_xmr, "XMR", "VND " + crypto.xMR.vND.toString()))
+                    add(BitCoin("", R.drawable.ic_xrp, "XRP", "VND " + crypto.xRP.vND.toString()))
+                    add(BitCoin("", R.drawable.ic_zec, "ZEC", "VND " + crypto.zEC.vND.toString()))
+                    add(BitCoin("", R.drawable.ic_eth, "ETH", "VND " + crypto.eTH.vND.toString()))
+                }
+            }
+            EUR_TYPE -> {
+                bitcoins.apply {
+                    add(BitCoin("", R.drawable.ic_bch, "BCH", "EUR " + crypto.bCH.eUR))
+                    add(BitCoin("", R.drawable.ic_btc, "BTC", "EUR " + crypto.bTC.eUR.toString()))
+                    add(BitCoin("", R.drawable.ic_dash, "DASH", "EUR " + crypto.dASH.eUR.toString()))
+                    add(BitCoin("", R.drawable.ic_etc, "ETC", "EUR " + crypto.eTC.eUR.toString()))
+                    add(BitCoin("", R.drawable.ic_etn, "ETN", "EUR " + crypto.eTN.eUR.toString()))
+                    add(BitCoin("", R.drawable.ic_ltc, "LTC", "EUR " + crypto.lTC.eUR.toString()))
+                    add(BitCoin("", R.drawable.ic_xmr, "XMR", "EUR " + crypto.xMR.eUR.toString()))
+                    add(BitCoin("", R.drawable.ic_xrp, "XRP", "EUR " + crypto.xRP.eUR.toString()))
+                    add(BitCoin("", R.drawable.ic_zec, "ZEC", "EUR " + crypto.zEC.eUR.toString()))
+                    add(BitCoin("", R.drawable.ic_eth, "ETH", "EUR " + crypto.eTH.eUR.toString()))
+                }
+            }
+            JPY_TYPE -> {
+                bitcoins.apply {
+                    add(BitCoin("", R.drawable.ic_bch, "BCH", "JPY " + crypto.bCH.jPY))
+                    add(BitCoin("", R.drawable.ic_btc, "BTC", "JPY " + crypto.bTC.jPY.toString()))
+                    add(BitCoin("", R.drawable.ic_dash, "DASH", "JPY " + crypto.dASH.jPY.toString()))
+                    add(BitCoin("", R.drawable.ic_etc, "ETC", "JPY " + crypto.eTC.jPY.toString()))
+                    add(BitCoin("", R.drawable.ic_etn, "ETN", "JPY " + crypto.eTN.jPY.toString()))
+                    add(BitCoin("", R.drawable.ic_ltc, "LTC", "JPY " + crypto.lTC.jPY.toString()))
+                    add(BitCoin("", R.drawable.ic_xmr, "XMR", "JPY " + crypto.xMR.jPY.toString()))
+                    add(BitCoin("", R.drawable.ic_xrp, "XRP", "JPY " + crypto.xRP.jPY.toString()))
+                    add(BitCoin("", R.drawable.ic_zec, "ZEC", "JPY " + crypto.zEC.jPY.toString()))
+                    add(BitCoin("", R.drawable.ic_eth, "ETH", "JPY " + crypto.eTH.jPY.toString()))
+                }
+            }
+        }
+
+        return bitcoins
+    }
 }

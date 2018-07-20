@@ -19,6 +19,9 @@ buildscript {
     ext.zxingembeddedVersion = '3.3.0'
     ext.gsonVersion = '2.8.5'
     ext.constraintVersion = '1.1.2'
+    ext.mpchartVersion = 'v3.0.3'
+    ext.retrofitVersion = '2.3.0'
+    ext.scalarsConverter = '2.1.0'
     repositories {
         google()
         jcenter()

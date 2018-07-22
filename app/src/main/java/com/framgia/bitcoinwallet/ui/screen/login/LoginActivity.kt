@@ -9,6 +9,7 @@ import com.framgia.bitcoinwallet.R
 import com.framgia.bitcoinwallet.databinding.ActivityLoginBinding
 import com.framgia.bitcoinwallet.ui.BaseActivity
 import com.framgia.bitcoinwallet.ui.screen.forgotpasswd.ForgotPassWdActivity
+import com.framgia.bitcoinwallet.ui.screen.main.MainActivity
 import com.framgia.bitcoinwallet.ui.screen.signup.SignUpActivity
 import com.framgia.bitcoinwallet.util.obtainViewModel
 import kotlinx.android.synthetic.main.activity_login.*
@@ -44,6 +45,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginActionListener 
     override fun observeViewModel() {
         binding.viewModel?.notifyMessage?.observe(this, Observer {
             it?.let { it1 -> notify(it1) }
+        })
+
+        binding.viewModel?.isLoginSuccessed?.observe(this, Observer {
+            it?.let { if (it) startActivity(MainActivity.getMainIntent(this)) }
         })
     }
 

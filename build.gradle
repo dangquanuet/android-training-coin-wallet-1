@@ -22,6 +22,7 @@ buildscript {
     ext.mpchartVersion = 'v3.0.3'
     ext.retrofitVersion = '2.3.0'
     ext.scalarsConverter = '2.1.0'
+    ext.multidexVersion = '1.0.3'
     repositories {
         google()
         jcenter()

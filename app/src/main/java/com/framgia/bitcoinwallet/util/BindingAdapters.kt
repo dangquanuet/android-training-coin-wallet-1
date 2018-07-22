@@ -5,15 +5,13 @@ import android.graphics.Bitmap
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.widget.ImageView
-import android.widget.Spinner
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.framgia.bitcoinwallet.R
-import com.framgia.bitcoinwallet.data.model.BitCoin
-import com.framgia.bitcoinwallet.data.model.Wallet
+import com.framgia.bitcoinwallet.data.model.*
 import com.framgia.bitcoinwallet.ui.screen.coinprice.CoinAdapter
+import com.framgia.bitcoinwallet.ui.screen.main.transactiontab.TransactionAdapter
 import com.framgia.bitcoinwallet.ui.screen.wallet.WalletAdapter
 
 /**
@@ -56,6 +54,15 @@ fun setItemDivider(view: RecyclerView, state: Boolean) {
     when (state) {
         true -> {
             view.addItemDecoration(DividerItemDecoration(view.context, LinearLayoutManager.VERTICAL))
+        }
+    }
+}
+
+@BindingAdapter("transactionItems")
+fun setTransactionItems(view: RecyclerView, transaction: MutableList<Transaction>?) {
+    when (view.adapter) {
+        is TransactionAdapter -> transaction?.let {
+            (view.adapter as TransactionAdapter).updateData(it)
         }
     }
 }

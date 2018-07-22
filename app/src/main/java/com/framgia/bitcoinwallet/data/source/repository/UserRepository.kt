@@ -90,4 +90,16 @@ class UserRepository(private val userRemoteDatasource: UserRemoteDatasource,
     override fun reAuth(authCredential: AuthCredential): Single<Boolean> {
         return userRemoteDatasource.reAuth(authCredential)
     }
+
+    override fun getSendTransaction(idUser: String, walletId: String): Observable<List<Transaction>> {
+        return userRemoteDatasource.getSendTransaction(idUser, walletId)
+    }
+
+    override fun getReceiveTransaction(idUser: String, walletId: String): Observable<List<Transaction>> {
+        return userRemoteDatasource.getReceiveTransaction(idUser, walletId)
+    }
+
+    override fun findUserWithWalletAddress(walletId: String): Single<User> {
+        return userRemoteDatasource.findUserWithWalletAddress(walletId)
+    }
 }

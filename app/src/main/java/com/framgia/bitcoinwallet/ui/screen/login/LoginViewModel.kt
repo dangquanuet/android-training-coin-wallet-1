@@ -16,6 +16,7 @@ class LoginViewModel(private val context: Application, private val userRepositor
     val loading: MutableLiveData<Boolean> = MutableLiveData()
     val email: MutableLiveData<String> = MutableLiveData()
     val password: MutableLiveData<String> = MutableLiveData()
+    val isLoginSuccessed: MutableLiveData<Boolean> = MutableLiveData()
 
     fun clickSignIn() {
         loading.value = true
@@ -28,7 +29,7 @@ class LoginViewModel(private val context: Application, private val userRepositor
                 else -> {
                     SharedPreUtils.changeLoginState(context, true)
                     it.id?.let { it1 -> SharedPreUtils.saveUserId(context, it1) }
-                    context.startActivity(MainActivity.getMainIntent(context))
+                    isLoginSuccessed.value = true
                 }
             }
         }) {

@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_transaction.*
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import com.framgia.bitcoinwallet.R
 
 class TransactionFragment : BaseFragment<FragmentTransactionBinding>() {
@@ -43,24 +44,29 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>() {
                 TransactionAdapter(mutableListOf(), TRANSACTION_SEND_TYPE,
                         object : BaseRecyclerViewHolder.OnItemClickListener<Transaction> {
                             override fun onItemClick(position: Int, data: Transaction) {
-                                copyQrCodeToClipBoar(data.interactAddress)
+                                copyQrCodeToClipBoard(data.interactAddress)
                             }
                         })
         recycler_receive_transaction.adapter =
                 TransactionAdapter(mutableListOf(), TRANSACTION_RECEIVE_TYPE,
                         object : BaseRecyclerViewHolder.OnItemClickListener<Transaction> {
                             override fun onItemClick(position: Int, data: Transaction) {
-                                copyQrCodeToClipBoar(data.interactAddress)
+                                copyQrCodeToClipBoard(data.interactAddress)
                             }
                         })
     }
 
-    private fun copyQrCodeToClipBoar(interactAddress: String) {
-        val clipboard = (activity as MainActivity).getSystemService(Context.CLIPBOARD_SERVICE)
-                as ClipboardManager
-        val clip = ClipData.newPlainText(CLIPBOARD_LABLE, interactAddress)
-        clipboard.primaryClip = clip
-        notifyMessage(resources.getString(R.string.copy_qr_successed_title))
+    private fun copyQrCodeToClipBoard(interactAddress: String) {
+        when (activity) {
+            is MainActivity -> {
+                val clipboard = (activity as MainActivity).getSystemService(Context.CLIPBOARD_SERVICE)
+                        as ClipboardManager
+                val clip = ClipData.newPlainText(CLIPBOARD_LABLE, interactAddress)
+                clipboard.primaryClip = clip
+                notifyMessage(resources.getString(R.string.copy_qr_successed_title))
+            }
+
+        }
     }
 
     override fun observeModelData(view: View) {
@@ -95,16 +101,20 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>() {
     }
 
     private fun showSendTransaction() {
-        text_sended_title.setTextColor(resources.getColor(R.color.color_deep_purple_50_700))
-        view_under_sened_title.setBackgroundColor(resources.getColor(R.color.color_deep_purple_50_700))
-        text_received_title.setTextColor(resources.getColor(android.R.color.darker_gray))
-        view_under_received_title.setBackgroundColor(resources.getColor(android.R.color.darker_gray))
+        context?.run {
+            text_sended_title.setTextColor(ContextCompat.getColor(this, R.color.color_deep_purple_50_700))
+            view_under_sened_title.setBackgroundColor(ContextCompat.getColor(this, R.color.color_deep_purple_50_700))
+            text_received_title.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray))
+            view_under_received_title.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
+        }
     }
 
     private fun showReceiveTransaction() {
-        text_received_title.setTextColor(resources.getColor(R.color.color_deep_purple_50_700))
-        view_under_received_title.setBackgroundColor(resources.getColor(R.color.color_deep_purple_50_700))
-        text_sended_title.setTextColor(resources.getColor(android.R.color.darker_gray))
-        view_under_sened_title.setBackgroundColor(resources.getColor(android.R.color.darker_gray))
+        context?.run {
+            text_received_title.setTextColor(ContextCompat.getColor(this, R.color.color_deep_purple_50_700))
+            view_under_received_title.setBackgroundColor(ContextCompat.getColor(this, R.color.color_deep_purple_50_700))
+            text_sended_title.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray))
+            view_under_sened_title.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
+        }
     }
 }

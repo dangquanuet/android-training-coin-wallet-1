@@ -16,19 +16,19 @@ class TransactionViewModel(private val context: Application,
         const val TAG = "TransactionViewModel"
     }
 
-    val isLoadingData: MutableLiveData<Boolean> = MutableLiveData()
-    val isSendTransactionShowed: MutableLiveData<Boolean> = MutableLiveData()
-    val isShowNoSendTransactionTitle: MutableLiveData<Boolean> = MutableLiveData()
-    val isShowNoReceiveTransactionTitle: MutableLiveData<Boolean> = MutableLiveData()
-    val sendTransaction: MutableLiveData<List<Transaction>> = MutableLiveData()
-    val receiveTransaction: MutableLiveData<List<Transaction>> = MutableLiveData()
+    val isLoadingData = MutableLiveData<Boolean>()
+    val isSendTransactionShowed = MutableLiveData<Boolean>()
+    val isShowNoSendTransactionTitle = MutableLiveData<Boolean>()
+    val isShowNoReceiveTransactionTitle = MutableLiveData<Boolean>()
+    val sendTransaction = MutableLiveData<List<Transaction>> ()
+    val receiveTransaction = MutableLiveData<List<Transaction>> ()
 
     //Don't get balance at this frg, because it is loaded in sendcoin frg and save in MainViewModel
     //So we only obsever that var in MainViewModel
-    val curentBalance: MutableLiveData<String> = MutableLiveData()
+    val curentBalance = MutableLiveData<String>()
 
-    var isHasSendTransaction: Boolean = false
-    var isHasReceiveTransaction: Boolean = false
+    var isHasSendTransaction = false
+    var isHasReceiveTransaction = false
 
     init {
         isLoadingData.value = true
